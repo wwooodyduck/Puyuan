@@ -5,7 +5,7 @@ namespace PuyuanDotNet8.Dtos
 {
     public class ResetPasswordDto
     {
-        [MaxLength(100)]
+        
         public string Token { get; set; }
 
         [MaxLength(100)]

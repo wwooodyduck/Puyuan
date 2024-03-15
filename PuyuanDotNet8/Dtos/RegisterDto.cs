@@ -23,4 +23,11 @@ namespace PuyuanDotNet8.Dtos
         [DefaultValue("root")]
         public string Password { get; set; }
     }
+
+    public class RegisterComfirmDto
+    {
+        [MaxLength(100)]
+        [DefaultValue("root")]
+        public string Account { get; set; }
+    }
 }

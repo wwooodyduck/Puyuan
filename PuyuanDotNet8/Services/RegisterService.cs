@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using Microsoft.Win32;
 
 namespace PuyuanDotNet8.Services
 {
@@ -76,8 +77,17 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
+        public async Task<IActionResult> ResgisterComfirm(RegisterComfirmDto registerComfirm)
+        {
+            var user = _context.UserProfile.SingleOrDefault(e => e.Username == registerComfirm.Account);
 
+            if (user == null)
+            {
+                return fail;
+            }
 
-
+            return success;
+        }
+        
     }
 }

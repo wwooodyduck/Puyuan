@@ -26,10 +26,16 @@ namespace PuyuanDotNet8.Controllers
             return result;
         }
 
-        [HttpPost("check")]
+        [HttpPost("reset")]
         public async Task<IActionResult>ResetPassword(ResetPasswordDto resetPassword)
         {
-
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            if(resetPassword==null)
+            {
+                return BadRequest();
+            }
+            var result = await _forgotPasswordService.ResetPassword(resetPassword,uuid);
+            return result;
         }
     }
 }
