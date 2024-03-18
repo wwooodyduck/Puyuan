@@ -23,20 +23,23 @@ namespace PuyuanDotNet8.Services
 
         public async Task<IActionResult> Register(RegisterDto register)
         {
-            var user = _context.UserProfile.SingleOrDefault(e => e.Username == register.Username);
+
+            var user = _context.UserProfile.SingleOrDefault(e => e.Username == register.Username);//檢查資料庫有無相同的Username
             if (user != null)
             {
                 return fail;
             }
 
+            // 創建一個新的UserProfile
             UserProfile userProfile = new UserProfile()
             {
-                Uuid = Guid.NewGuid().ToString(),
+                Uuid = Guid.NewGuid().ToString(),// 生成一個新的UUID
                 Password = _passwordHelper.HashPassword(register.Password)
             };
-            userProfile = _mapper.Map(register, userProfile);
-            _context.UserProfile.Add(userProfile);
+            userProfile = _mapper.Map(register, userProfile);// 將RegisterDto的屬性映射到UserProfile上
+            _context.UserProfile.Add(userProfile);// 將新的UserProfile添加到資料庫上下文中
 
+            // 為新用戶創建相關數據（UserSet, Default, Setting, MedicalInformation）
             UserSet userSet = new UserSet()
             {
                 Uuid = userProfile.Uuid,
@@ -62,16 +65,18 @@ namespace PuyuanDotNet8.Services
                 Created_At = userProfile.Created_At
             };
 
+            // 將相關數據添加到資料庫上下文中
             _context.UserSet.Add(userSet);
             _context.Default.Add(@default);
             _context.Setting.Add(setting);
             _context.MedicalInformation.Add(medical);
 
+            //嘗試保存更改到資料庫
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (DbUpdateConcurrencyException ex)// 如果存在資料庫更新發生異常，則返回失敗结果
             {
                 return fail;
             }
@@ -85,8 +90,10 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
-            return success;
+            else
+            {
+                return success;
+            }
         }
         
     }

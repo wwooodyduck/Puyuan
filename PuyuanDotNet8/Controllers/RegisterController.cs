@@ -24,11 +24,11 @@ namespace PuyuanDotNet8.Controllers
             {
                 return BadRequest("bad");
             }
-        var result =await _registerService.Register(register);
+            var result =await _registerService.Register(register);
             return result;
         }
 
-        [HttpPost]
+        [HttpPost("comfirm")]
         public async Task<IActionResult> ResgisterComfirm(RegisterComfirmDto registerComfirm)
         {
             if (registerComfirm == null)

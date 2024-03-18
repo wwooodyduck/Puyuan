@@ -92,6 +92,7 @@ builder.Services.AddScoped<RegisterService>();
 builder.Services.AddScoped<VerificationService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ForgetPasswordService>();
+builder.Services.AddScoped<UsersetService>();
 
 builder.Services.AddSingleton<EmailSenderHelper>();
 builder.Services.AddSingleton<JwtHelper>();

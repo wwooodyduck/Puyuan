@@ -1,16 +1,24 @@
-﻿namespace PuyuanDotNet8.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+
+namespace PuyuanDotNet8.Dtos
 {
     public class UsersetDto
     {
-        public string token { get; set; }
-        public string name { get; set; }
-        public string birthday { get; set; }
-        public double height{ get; set; }
-        public Boolean gender { get; set; }
-        public string fcm_id { get; set; }
-        public string address { get; set; }
-        public string weight { get; set; }
-        public string phone { get; set; }
-        public string email { get; set; }
+        public string Name { get; set; }
+        public DateTime? Birthday { get; set; }
+        public int? Height{ get; set; }
+        public Boolean? Gender { get; set; }
+        public string Fcm_Id { get; set; }
+        public string Address { get; set; }
+        public int? Weight { get; set; }
+
+        
+        
+        public string Email { get; set; }
+
+        
+        
+        public string Phone { get; set; }
     }
 }

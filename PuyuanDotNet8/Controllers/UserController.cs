@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PuyuanDotNet8.Services;
 
 namespace PuyuanDotNet8.Controllers
 {
@@ -8,6 +9,10 @@ namespace PuyuanDotNet8.Controllers
     public class UserController : ControllerBase
     {
         private readonly UsersetService _usersetService;
+        public UserController(UsersetService registerService)
+        {
+            _usersetService = registerService;
+        }
         [HttpPatch]
         public async Task<IActionResult>UserSet(UsersetDto userset)
         {
