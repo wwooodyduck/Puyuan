@@ -84,8 +84,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<PasswordHelper>();
-/*builder.Services.AddSingleton<JwtHelper>();
-builder.Services.AddSingleton<EmailSenderHelper>();*/
 
 
 builder.Services.AddScoped<RegisterService>();
@@ -93,6 +91,7 @@ builder.Services.AddScoped<VerificationService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ForgetPasswordService>();
 builder.Services.AddScoped<UsersetService>();
+builder.Services.AddScoped<BodyinfoServices>();
 
 builder.Services.AddSingleton<EmailSenderHelper>();
 builder.Services.AddSingleton<JwtHelper>();

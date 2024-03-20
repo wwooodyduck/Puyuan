@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using PuyuanDotNet8.Data;
 using PuyuanDotNet8.Helpers;
 
 namespace PuyuanDotNet8.Services
@@ -34,5 +35,38 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
+
+        public async Task<IActionResult> UserDefault(UserDefaultDto userDefault,string uuid)
+        {
+            var userdefault = _context.Default.SingleOrDefault(e => e.Uuid.Equals(uuid));
+            userdefault=_mapper.Map(userDefault, userdefault);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+        }
+
+        public async Task<IActionResult> Setting(SettingDto setting,string uuid)
+        {
+            var usersetting = _context.Setting.SingleOrDefault(e => e.Uuid.Equals(uuid));
+            usersetting = _mapper.Map(setting, usersetting);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+        }
+        
+
     }
 }

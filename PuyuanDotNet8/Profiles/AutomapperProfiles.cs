@@ -15,6 +15,8 @@ namespace PuyuanDotNet8.Profiles
 
             CreateMap<UsersetDto, UserProfile>();
             CreateMap<UsersetDto, UserSet>();
+            CreateMap<UserDefaultDto, Default>();
+            CreateMap<SettingDto, Setting>();
         }
             
     }
