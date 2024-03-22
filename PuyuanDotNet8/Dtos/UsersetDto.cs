@@ -51,4 +51,8 @@ namespace PuyuanDotNet8.Dtos
         public bool unit_of_weight { get; set; }
         public bool unit_of_height { get; set; }
     }
+    public class BadgeUpdateDto
+    {
+        public int badge { get; set; }
+    }
 }

@@ -27,5 +27,9 @@
         public double? alc { get; set; }
         public DateTime recorded_at { get; set; }
     }
+    public class HbA1cDelete
+    {
+        public List<int> ids {  get; set; }    
+    }
 
 }

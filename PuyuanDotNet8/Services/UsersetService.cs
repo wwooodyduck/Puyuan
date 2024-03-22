@@ -66,7 +66,22 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
-        
+        public async Task<IActionResult> BadgeUpdate(BadgeUpdateDto badgeUpdate,string uuid)
+        {
+            var user = _context.UserSet.SingleOrDefault(e => e.Uuid.Equals(uuid));
+
+             user.Badge= badgeUpdate.badge;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+        }
 
     }
 }

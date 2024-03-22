@@ -62,8 +62,18 @@ namespace PuyuanDotNet8.Controllers
         [HttpGet("HbA1c")]
         public async Task<IActionResult> HbA1cGet()
         {
-            var result= await _bodyinfoServices.HbA1cGet();
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            var result= await _bodyinfoServices.HbA1cGet(uuid);
             return result; 
         }
+        [HttpDelete("HbA1c")]
+        public async Task<IActionResult> HbA1cDelete(HbA1cDelete hbA1Cdelete)
+        {
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            var result = await _bodyinfoServices.HbA1cDelete(hbA1Cdelete,uuid);
+            return result;
+        }
+
+
     }
 }

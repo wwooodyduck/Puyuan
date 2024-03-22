@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PuyuanDotNet8.Data;
 
@@ -110,7 +111,7 @@ public partial class HbA1c
     public DateTime Recorded_At { get; set; }
     public DateTime Created_At { get; set; }
     public DateTime? Updated_At { get; set; }
-
+    [JsonIgnore]
     public UserProfile UserProfile { get; set; }
 }
 
