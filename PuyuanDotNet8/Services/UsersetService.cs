@@ -82,6 +82,41 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
+        public async Task<IActionResult> LastUpdate(string uuid )
+        {
+            var _bloodpressure = _context.BloodPressure
+                   .Where(e => e.Uuid.Equals(uuid))
+                   .OrderByDescending(e => e.Recorded_At) // 假设CreatedAt是一个时间戳字段
+                   .FirstOrDefault();
+
+            var _weight = _context._Weight
+                    .Where(e => e.Uuid.Equals(uuid))
+                   .OrderByDescending(e => e.Recorded_At) // 假设CreatedAt是一个时间戳字段
+                   .FirstOrDefault();
+
+            var _bloodsugar = _context.BloodSugar
+                    .Where(e => e.Uuid.Equals(uuid))
+                   .OrderByDescending(e => e.Recorded_At) // 假设CreatedAt是一个时间戳字段
+                   .FirstOrDefault();
+
+            var _diet = _context.DiaryDiet
+                    .Where(e => e.Uuid.Equals(uuid))
+                   .OrderByDescending(e => e.Recorded_At) // 假设CreatedAt是一个时间戳字段
+                   .FirstOrDefault();
+
+
+            var response = new
+            {
+                status = "0",
+                blood_pressure= _bloodpressure.Recorded_At,
+                weight=_weight.Recorded_At,
+                blood_sugar= _bloodsugar.Recorded_At,
+                diet= _diet.Recorded_At
+            };
+
+            JsonResult success = new JsonResult(response);
+            return success;
+        }
 
     }
 }

@@ -62,5 +62,12 @@ namespace PuyuanDotNet8.Controllers
             var result = await _usersetService.BadgeUpdate(badgeUpdate, uuid);
             return result;
         }
+        [HttpGet("lastupdate")]
+        public async Task<IActionResult> LastUpdate()
+        {
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            var result = await _usersetService.LastUpdate(uuid);
+            return result;
+        }
     }
 }
