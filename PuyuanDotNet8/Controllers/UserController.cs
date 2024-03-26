@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using PuyuanDotNet8.Data;
+using PuyuanDotNet8.Dtos;
 using PuyuanDotNet8.Services;
 
 namespace PuyuanDotNet8.Controllers
@@ -69,5 +70,18 @@ namespace PuyuanDotNet8.Controllers
             var result = await _usersetService.LastUpdate(uuid);
             return result;
         }
+        [HttpPost("lastrecord")]
+        public async Task<IActionResult> lastrecorded(LastRecordDto lastRecord)
+        {
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            if (lastRecord == null)
+            {
+                return BadRequest("bad");
+            }
+            var result = await _usersetService.lastrecorded(lastRecord, uuid);
+            return result;
+        }
+
+
     }
 }

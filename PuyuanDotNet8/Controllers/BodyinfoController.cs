@@ -73,7 +73,5 @@ namespace PuyuanDotNet8.Controllers
             var result = await _bodyinfoServices.HbA1cDelete(hbA1Cdelete,uuid);
             return result;
         }
-
-
     }
 }

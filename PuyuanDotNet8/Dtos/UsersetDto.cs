@@ -55,4 +55,8 @@ namespace PuyuanDotNet8.Dtos
     {
         public int badge { get; set; }
     }
+    public class LastRecordDto
+    {
+        public List<int?> diets { get; set; }
+    }
 }

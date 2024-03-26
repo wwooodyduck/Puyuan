@@ -18,7 +18,7 @@ namespace PuyuanDotNet8.Services
 
         public async Task<IActionResult> Druginfoget(DrugDto drugget,string uuid)
         {
-            var user = _context.DrugInformation.Where(h => h.Uuid == uuid && h.Drug_Type == drugget.type) .ToList();
+            var user = _context.DrugInformation.Where(h => h.Uuid == uuid && h.Drug_Type == drugget.type);
             if (user == null)
             {
                 return fail;
@@ -33,7 +33,7 @@ namespace PuyuanDotNet8.Services
                     type=user.Drug_Type,
                     name=user.Name,
                     recorded_at=user.Recorded_At
-                }).ToList()
+                })
             };
 
             JsonResult success = new JsonResult(response);
@@ -67,7 +67,6 @@ namespace PuyuanDotNet8.Services
             var matchedRecords = _context.DrugInformation.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList(); // 假设按 Id 排序
             var indexesToDelete = drugDelete.ids.Distinct().OrderBy(x => x).ToList(); // 去重并排序
             var recordsToDelete = new List<DrugInformation>(); // 用你的实体类型替换 YourEntityType
-
             foreach (var index in indexesToDelete)
             {
                 if (index >= 0 && index < matchedRecords.Count) // 确保索引有效
@@ -75,18 +74,12 @@ namespace PuyuanDotNet8.Services
                     recordsToDelete.Add(matchedRecords[index]);
                 }
             }
-
             if (!recordsToDelete.Any())
             {
                 return fail;
             }
-
-            // 删除记录
             _context.DrugInformation.RemoveRange(recordsToDelete);
-
-            // 保存更改
             await _context.SaveChangesAsync();
-
             return success;
         }
     }
