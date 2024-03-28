@@ -81,7 +81,12 @@ namespace PuyuanDotNet8.Controllers
             var result = await _usersetService.lastrecorded(lastRecord, uuid);
             return result;
         }
-
-
+        [HttpGet("userinfo")]
+        public async Task<IActionResult> Userinfo()
+        {
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            var result = await _usersetService.Userinfo(uuid);
+            return result;
+        }
     }
 }

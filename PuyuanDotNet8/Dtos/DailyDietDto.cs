@@ -18,4 +18,9 @@
         public List<int>? diary_diets { get; set; }
         public List<int>? weights { get; set; }
     }
+
+    public class DairyListDto
+    {
+        public string date { get; set; }
+    }
 }

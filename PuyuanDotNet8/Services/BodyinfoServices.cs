@@ -27,7 +27,7 @@ namespace PuyuanDotNet8.Services
                 Diastolic = Bloodpressure.diastolic,
                 Pulse = Bloodpressure.pulse
             };
-
+            bloodPressure.Recorded_At = DateTime.UtcNow;
             _context.BloodPressure.Add(bloodPressure);
             try
             {
@@ -70,6 +70,7 @@ namespace PuyuanDotNet8.Services
                 Sugar = bloodSugar.sugar,
                 Timeperiod= bloodSugar.timeperiod
             };
+            bloodSugar.recorded_at = DateTime.Now;
             _context.BloodSugar.Add(_bloodsugar);
             try
             {
@@ -87,8 +88,9 @@ namespace PuyuanDotNet8.Services
             HbA1c _hbA1C = new HbA1c()
             {
                 Uuid = uuid,
-                A1c= hbA1Cdto.alc
+                A1c= hbA1Cdto.alc,
             };
+
 
             _context.HbA1c.Add(_hbA1C);
             try
@@ -145,7 +147,6 @@ namespace PuyuanDotNet8.Services
                 {
                 return fail;
                 }
-
                 // 删除记录
                 _context.HbA1c.RemoveRange(recordsToDelete);
 

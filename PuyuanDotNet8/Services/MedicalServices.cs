@@ -53,6 +53,7 @@ namespace PuyuanDotNet8.Services
                 return fail;
             }
             user = _mapper.Map(MedicalDto, user);
+            user.Updated_At = DateTime.Now;
             try
             {
                 await _context.SaveChangesAsync();

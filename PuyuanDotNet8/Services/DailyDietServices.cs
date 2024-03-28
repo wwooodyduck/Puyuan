@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
+using PuyuanDotNet8.Data;
 using PuyuanDotNet8.Dtos;
 
 namespace PuyuanDotNet8.Services
@@ -95,6 +97,82 @@ namespace PuyuanDotNet8.Services
             _context.DiaryDiet.RemoveRange(DiaryDietrecord);
             _context._Weight.RemoveRange(weightrecord);
             await _context.SaveChangesAsync();
+            return success;
+        }
+
+        public async Task<IActionResult> DairyList(DairyListDto dairyList,string uuid)
+        {
+            var bloodPressureContent = _context.BloodPressure
+                .Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList();
+
+            var weightcontent = _context._Weight.Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList(); ;
+            var bloodsugarcontent = _context.BloodSugar.Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList(); ;
+            var dairydietcontent = _context.DiaryDiet.Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList(); ;
+
+            var respone = new
+            {
+                status="0",
+                diary = new
+                {
+
+                    blood_pressure = bloodPressureContent.Select(bloodPressureContent => new
+                    {
+                        id = bloodPressureContent.Id,
+                        user_id = bloodPressureContent.Uuid,
+                        systolic = bloodPressureContent.Systolic,
+                        diastolic = bloodPressureContent.Diastolic,
+                        pulse = bloodPressureContent.Pulse,
+                        recorded_at = bloodPressureContent.Recorded_At,
+                        type = "blood_pressure"
+                    }).ToList(),
+                    weight = weightcontent.Select(weightcontent => new
+                    {
+                        id = weightcontent.Id,
+                        user_id = weightcontent.Uuid,
+                        weight = weightcontent.Weight,
+                        body_fat = weightcontent.Body_Fat,
+                        bmi = weightcontent.Bmi,
+                        recorded_at = weightcontent.Recorded_At,
+                        type = "weight"
+                    }).ToList(),
+                    bloodsugar = bloodsugarcontent.Select(bloodsugarcontent => new
+                    {
+                        id=bloodsugarcontent.Id,
+                        user_id= bloodsugarcontent.Uuid,
+                        sugar=bloodsugarcontent.Sugar,
+                        timeperiod=bloodsugarcontent.Timeperiod,
+                        recorded_at=bloodsugarcontent.Recorded_At,
+                        type="blood_sugar"
+                    }).ToList(),
+                    diet = dairydietcontent.Select(dairydietcontent => new 
+                    {
+                        id=dairydietcontent.Id,
+                        user_id= dairydietcontent.Uuid,
+                        description=dairydietcontent.Description,
+                        meal=dairydietcontent.Meal,
+                        tag =new
+                        {
+                            name=dairydietcontent.Tag
+                        },
+                        image = new  
+                        {
+                            dairydietcontent.Image
+                        },
+                        location = new
+                        {
+                            lat= dairydietcontent.Lat,
+                            lng=dairydietcontent.Lng,
+                        },
+                        recorded_at=dairydietcontent.Recorded_At,
+                        type="diet",
+                        reply="安安"
+
+                    }).ToList()
+
+
+                }
+            };
+            JsonResult success = new JsonResult(respone);
             return success;
         }
     }

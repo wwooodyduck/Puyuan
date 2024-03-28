@@ -49,7 +49,8 @@ namespace PuyuanDotNet8.Services
                 Name = drugUpload.Name,
                 Recorded_At= drugUpload.recorded_at
             };
-
+            _druginfo.Created_At = DateTime.Now;
+            _druginfo.Updated_At = DateTime.Now;
             _context.DrugInformation.Add(_druginfo);
             try
             {
