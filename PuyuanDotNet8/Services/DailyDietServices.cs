@@ -12,6 +12,9 @@ namespace PuyuanDotNet8.Services
         private readonly IMapper _mapper;
         JsonResult success = new JsonResult(new { status = "0" });
         JsonResult fail= new JsonResult(new { status = "1" });
+        JsonResult fail2 = new JsonResult(new { status = "2" });
+        JsonResult fail3 = new JsonResult(new { status = "3" });
+        JsonResult fail4 = new JsonResult(new { status = "4" });
         public DailyDietServices(DataContext context, IMapper mapper)
         {
             _context = context;
@@ -102,77 +105,95 @@ namespace PuyuanDotNet8.Services
 
         public async Task<IActionResult> DairyList(DairyListDto dairyList,string uuid)
         {
-            var bloodPressureContent = _context.BloodPressure
-                .Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList();
-
-            var weightcontent = _context._Weight.Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList(); ;
-            var bloodsugarcontent = _context.BloodSugar.Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList(); ;
-            var dairydietcontent = _context.DiaryDiet.Where(h => h.Uuid.Equals(uuid)).OrderByDescending(h => h.Recorded_At).Take(2).ToList(); ;
-
-            var respone = new
+            if (!DateTime.TryParse(dairyList.date, out var recordedAt))
             {
-                status="0",
-                diary = new
+                // 如果转换失败，返回错误消息
+                return fail;
+            }
+
+            // 使用转换后的日期进行查询
+            var bloodPressureContent = _context.BloodPressure.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+            var weightcontent = _context._Weight.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+            var bloodsugarcontent = _context.BloodSugar.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+            var dairydietcontent = _context.DiaryDiet.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+
+            if (weightcontent == null)
+            {
+                return fail2;
+            }
+            if(bloodsugarcontent == null)
+            {
+                return fail3;
+            }
+            if (bloodPressureContent == null)
+            {
+                return fail;
+            }
+            if(dairydietcontent == null)
+            {
+                return fail4;
+            }
+            var respone = new
                 {
-
-                    blood_pressure = bloodPressureContent.Select(bloodPressureContent => new
+                    status = "0",
+                    diary = new
                     {
-                        id = bloodPressureContent.Id,
-                        user_id = bloodPressureContent.Uuid,
-                        systolic = bloodPressureContent.Systolic,
-                        diastolic = bloodPressureContent.Diastolic,
-                        pulse = bloodPressureContent.Pulse,
-                        recorded_at = bloodPressureContent.Recorded_At,
-                        type = "blood_pressure"
-                    }).ToList(),
-                    weight = weightcontent.Select(weightcontent => new
-                    {
-                        id = weightcontent.Id,
-                        user_id = weightcontent.Uuid,
-                        weight = weightcontent.Weight,
-                        body_fat = weightcontent.Body_Fat,
-                        bmi = weightcontent.Bmi,
-                        recorded_at = weightcontent.Recorded_At,
-                        type = "weight"
-                    }).ToList(),
-                    bloodsugar = bloodsugarcontent.Select(bloodsugarcontent => new
-                    {
-                        id=bloodsugarcontent.Id,
-                        user_id= bloodsugarcontent.Uuid,
-                        sugar=bloodsugarcontent.Sugar,
-                        timeperiod=bloodsugarcontent.Timeperiod,
-                        recorded_at=bloodsugarcontent.Recorded_At,
-                        type="blood_sugar"
-                    }).ToList(),
-                    diet = dairydietcontent.Select(dairydietcontent => new 
-                    {
-                        id=dairydietcontent.Id,
-                        user_id= dairydietcontent.Uuid,
-                        description=dairydietcontent.Description,
-                        meal=dairydietcontent.Meal,
-                        tag =new
+                        blood_pressure = new
                         {
-                            name=dairydietcontent.Tag
+                            id = bloodPressureContent.Id,
+                            user_id = bloodPressureContent.Uuid,
+                            systolic = bloodPressureContent.Systolic,
+                            diastolic = bloodPressureContent.Diastolic,
+                            pulse = bloodPressureContent.Pulse,
+                            recorded_at = bloodPressureContent.Recorded_At,
+                            type = "blood_pressure"
                         },
-                        image = new  
+                        weight = new
                         {
-                            dairydietcontent.Image
+                            id = weightcontent.Id,
+                            user_id = weightcontent.Uuid,
+                            weight = weightcontent.Weight,
+                            body_fat = weightcontent.Body_Fat,
+                            bmi = weightcontent.Bmi,
+                            recorded_at = weightcontent.Recorded_At,
+                            type = "weight"
                         },
-                        location = new
+                        bloodsugar = new
                         {
-                            lat= dairydietcontent.Lat,
-                            lng=dairydietcontent.Lng,
+                            id = bloodsugarcontent.Id,
+                            user_id = bloodsugarcontent.Uuid,
+                            sugar = bloodsugarcontent.Sugar,
+                            timeperiod = bloodsugarcontent.Timeperiod,
+                            recorded_at = bloodsugarcontent.Recorded_At,
+                            type = "blood_sugar"
                         },
-                        recorded_at=dairydietcontent.Recorded_At,
-                        type="diet",
-                        reply="安安"
+                        diet = new
+                        {
+                            id = dairydietcontent.Id,
+                            user_id = dairydietcontent.Uuid,
+                            description = dairydietcontent.Description,
+                            meal = dairydietcontent.Meal,
+                            tag = new
+                            {
+                                name = dairydietcontent.Tag
+                            },
+                            image = new
+                            {
+                                dairydietcontent.Image
+                            },
+                            location = new
+                            {
+                                lat = dairydietcontent.Lat,
+                                lng = dairydietcontent.Lng,
+                            },
+                            recorded_at = dairydietcontent.Recorded_At,
+                            type = "diet",
+                            reply = "安安"
 
-                    }).ToList()
-
-
-                }
-            };
-            JsonResult success = new JsonResult(respone);
+                        }
+                    }
+                };
+                JsonResult success = new JsonResult(respone);
             return success;
         }
     }
