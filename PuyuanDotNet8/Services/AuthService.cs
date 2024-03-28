@@ -8,10 +8,8 @@ namespace PuyuanDotNet8.Services
         private readonly PasswordHelper _passwordHelper;
         private readonly JwtHelper _jwthelper;
 
-        JsonResult faila = new JsonResult(new { status = "1" });
-        JsonResult failb = new JsonResult(new { status = "3" });
-        JsonResult failc = new JsonResult(new { status = "4" });
-
+        JsonResult fail = new JsonResult(new { status = "1" });
+      
         public AuthService(DataContext context, PasswordHelper passwordHelper, JwtHelper jwtHelper)
         {
             _context = context;
@@ -27,15 +25,15 @@ namespace PuyuanDotNet8.Services
                         .SingleOrDefault(e => e.Username.Equals(login.Username));
             if (user == null)
             {
-                return faila;
+                return fail;
             }
             if(!user.UserSet.Verified)
             {
-                return failb;
+                return fail;
             }
             if(!_passwordHelper.VerifyPassword(login.Password, user.Password))
             {
-                return failc;
+                return fail;
             }
 
             var token = _jwthelper.GetJwtToken(user.Uuid, "user", user.Username);
