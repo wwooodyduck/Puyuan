@@ -9,9 +9,9 @@ public partial class UserProfile
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     [MaxLength(100)]
-    public string Username { get; set; }
+    public string? Username { get; set; }
     [MaxLength(100)]
-    public string Uuid { get; set; }
+    public string Uuid { get; set; }    
     [MaxLength(100)]
     public string? Phone { get; set; }
     [MaxLength(100)]
@@ -46,7 +46,7 @@ public partial class UserSet
 {
     [Key]
     [MaxLength(100)]
-    public string Uuid { get; set; }
+    public string? Uuid { get; set; }
 
     [MaxLength(100)]
     public string? Name { get; set; }

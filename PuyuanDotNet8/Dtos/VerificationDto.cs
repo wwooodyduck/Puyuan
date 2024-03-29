@@ -6,10 +6,8 @@ namespace PuyuanDotNet8.Dtos
     public class VerificationDto { }
     public class CheckVerificationDto
     {
-        [Phone]
-        [MaxLength(100)]
-        [DefaultValue("0987654321")]
-        public string Phone { get; set; }
+       
+        public string Email { get; set; }
         [Display(Name = "code")]
         [MaxLength(100)]
         public string VerifictionCode { get; set; }
@@ -20,9 +18,9 @@ namespace PuyuanDotNet8.Dtos
         [MaxLength(100)]
         [DefaultValue("root@mail.com")]
         public string Email { get; set; }
-        [Phone]
+        /*[Phone]
         [MaxLength(100)]
         [DefaultValue("0987654321")]
-        public string Phone { get; set; }
+        public string Phone { get; set; }*/
     }
 }

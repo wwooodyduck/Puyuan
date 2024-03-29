@@ -27,7 +27,7 @@ namespace PuyuanDotNet8.Services
             var hashpassword= _passwordHelper.HashPassword(newPassword);
             var user = _context.UserProfile
                 .Include(e => e.UserSet)
-                .SingleOrDefault(e => e.Email.Equals(forgets.Email) && e.Phone.Equals(forgets.Phone));
+                .SingleOrDefault(e => e.Email.Equals(forgets.Email));
             if (user == null)
             {
                 return fail;

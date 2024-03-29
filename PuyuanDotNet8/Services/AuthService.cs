@@ -19,7 +19,7 @@ namespace PuyuanDotNet8.Services
             JsonResult uncheckMail = new JsonResult(new { status = "2" });
             var user = _context.UserProfile
                         .Include(e => e.UserSet)
-                        .SingleOrDefault(e => e.Username.Equals(login.Username));
+                        .SingleOrDefault(e => e.Email.Equals(login.email));
             if (user == null)
             {
                 return fail;
@@ -32,7 +32,7 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-            var token = _jwthelper.GetJwtToken(user.Uuid, "user", user.Username);
+            var token = _jwthelper.GetJwtToken(user.Uuid, "user");
             JsonResult success = new JsonResult(new { status = "0", token });
             return success;
         }

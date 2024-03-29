@@ -7,7 +7,7 @@ namespace PuyuanDotNet8.Dtos
     {
         [MaxLength(100)]
         [DefaultValue("root2")]
-        public string Username { get; set; }
+        public string email { get; set; }
 
         [MaxLength(100)]
         [DefaultValue("root2")]

@@ -20,7 +20,7 @@ namespace PuyuanDotNet8.Services
         public async Task<IActionResult> Register(RegisterDto register)
         {
 
-            var user = _context.UserProfile.SingleOrDefault(e => e.Username == register.Username);//檢查資料庫有無相同的Username
+            var user = _context.UserProfile.SingleOrDefault(e => e.Email == register.Email);//檢查資料庫有無相同的Username
             if (user != null)
             {
                 return fail;

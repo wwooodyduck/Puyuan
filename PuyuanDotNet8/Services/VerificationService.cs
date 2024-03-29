@@ -20,7 +20,7 @@ namespace PuyuanDotNet8.Services
         {
             var user = _datacontext.UserProfile
                 .Include(e => e.UserSet)
-                .SingleOrDefault(e => e.Email.Equals(sendVerification.Email) && e.Phone.Equals(sendVerification.Phone));
+                .SingleOrDefault(e => e.Email.Equals(sendVerification.Email));
             if (user == null)
             {
                 return fail;
@@ -71,7 +71,7 @@ namespace PuyuanDotNet8.Services
         {
             var user = _datacontext.UserProfile
                 .Include(e => e.UserSet)
-                .SingleOrDefault(e => e.Phone.Equals(checkVerification.Phone));
+                .SingleOrDefault(e => e.Email.Equals(checkVerification.Email));
             if (user == null)
             {
                 return fail;

@@ -16,11 +16,11 @@ namespace PuyuanDotNet8.Helpers
             signKey = configuration.GetValue<string>("Secret:JwtSettings:SignKey");
             expireMinutes = configuration.GetValue<int>("Secret:JwtSettings:ExpireMinutes");
         }
-        public string GetJwtToken(string uuid, string role, string username)
+        public string GetJwtToken(string uuid, string role/*, string username*/)
         {
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, uuid));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));
+            /*claims.Add(new Claim(JwtRegisteredClaimNames.Sub, username));*/
             claims.Add(new Claim(ClaimTypes.Role, role));
             var userClaimsIdentity = new ClaimsIdentity(claims);
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey));

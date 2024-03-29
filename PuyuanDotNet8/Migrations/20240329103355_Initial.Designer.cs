@@ -12,7 +12,7 @@ using PuyuanDotNet8.Data;
 namespace PuyuanDotNet8.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240305073229_Initial")]
+    [Migration("20240329103355_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -615,7 +615,6 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -627,7 +626,8 @@ namespace PuyuanDotNet8.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Username")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Username] IS NOT NULL");
 
                     b.ToTable("UserProfile");
                 });

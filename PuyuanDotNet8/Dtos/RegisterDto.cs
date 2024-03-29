@@ -5,14 +5,13 @@ namespace PuyuanDotNet8.Dtos
 {
     public class RegisterDto
     {
-        [MaxLength(100)]
+        /*[MaxLength(100)]
         [DefaultValue("root")]
         public string Username { get; set; }
-        [Phone]
         [MaxLength(100)]
         [DefaultValue("0987654321")]
         public string? Phone { get; set; }
-        [EmailAddress]
+        [EmailAddress]*/
         [MaxLength(100)]
         [DefaultValue("root@mail.com")]
         public string? Email { get; set; }
