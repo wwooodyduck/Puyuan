@@ -10,7 +10,6 @@
         public double? lng { get; set; }
         public DateTime recorded_at { get; set; }
     }
-
     public class DairyDelete
     {
         public List<int>? blood_sugar { get; set; }
@@ -18,7 +17,6 @@
         public List<int>? diary_diets { get; set; }
         public List<int>? weights { get; set; }
     }
-
     public class DairyListDto
     {
         public string date { get; set; }

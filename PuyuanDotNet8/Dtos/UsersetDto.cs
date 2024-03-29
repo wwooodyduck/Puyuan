@@ -40,7 +40,6 @@ namespace PuyuanDotNet8.Dtos
         public int? body_fat_max { get; set; }
         public int? body_fat_min { get; set; }
     }
-
     public class SettingDto
     {
         public bool after_recording { get; set; }

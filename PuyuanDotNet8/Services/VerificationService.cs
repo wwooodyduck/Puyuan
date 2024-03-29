@@ -7,10 +7,8 @@ namespace PuyuanDotNet8.Services
     {
         private readonly DataContext _datacontext;
         private readonly EmailSenderHelper _emailSender;
-
         JsonResult success = new JsonResult(new { status = "0" });
         JsonResult fail = new JsonResult(new { status = "1" });
-
         public VerificationService(
             EmailSenderHelper emailSenderHelper,
             DataContext context)
@@ -27,12 +25,10 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
             if (user.UserSet.Verified.Equals(true))
             {
                 return fail;
             }
-
             var verif = _datacontext.Verifications.SingleOrDefault(e => e.Uuid.Equals(user.Uuid));
             var verifCode = RandomCodeHelper.Create(32);
             if (verif == null)
@@ -49,7 +45,6 @@ namespace PuyuanDotNet8.Services
                 verif.VerifictionCode = verifCode;
                 _datacontext.Verifications.Update(verif);
             }
-
             var message = new MessageDto(
                 sendVerification.Email,
                 "普元驗證訊息",
@@ -62,7 +57,6 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
             try
             {
                 await _datacontext.SaveChangesAsync();
@@ -71,7 +65,6 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
             return success;
         }
         public async Task<IActionResult> CheckVerification(CheckVerificationDto checkVerification)
@@ -83,7 +76,6 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
             var verfi = _datacontext.Verifications.SingleOrDefault(e => e.Uuid.Equals(user.Uuid));
             if (!user.UserSet.Verified && verfi.VerifictionCode.Equals(checkVerification.VerifictionCode))
             {
@@ -91,7 +83,6 @@ namespace PuyuanDotNet8.Services
                 _datacontext.Update(user);
                 _datacontext.Remove(verfi);
             }
-
             try
             {
                 await _datacontext.SaveChangesAsync();

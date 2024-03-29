@@ -15,7 +15,6 @@ namespace PuyuanDotNet8.Services
             _context = context;
             _mapper = mapper;
         }
-
         public async Task<IActionResult> Druginfoget(DrugDto drugget,string uuid)
         {
             var user = _context.DrugInformation.Where(h => h.Uuid == uuid && h.Drug_Type == drugget.type);
@@ -35,7 +34,6 @@ namespace PuyuanDotNet8.Services
                     recorded_at=user.Recorded_At
                 })
             };
-
             JsonResult success = new JsonResult(response);
             return success;
         }
@@ -62,7 +60,6 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
-
         public async Task<IActionResult> DrugInfoDelete(DrugDeleteDto drugDelete,string uuid)
         {
             var matchedRecords = _context.DrugInformation.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList(); // 假设按 Id 排序

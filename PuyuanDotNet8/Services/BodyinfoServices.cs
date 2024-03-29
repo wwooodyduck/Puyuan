@@ -17,7 +17,6 @@ namespace PuyuanDotNet8.Services
             _context = context;
             _mapper = mapper;
         }
-
         public async Task<IActionResult> BloodPressureUpload(BodyDto Bloodpressure, string uuid)
         {
             BloodPressure bloodPressure = new BloodPressure()
@@ -61,7 +60,6 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
-
         public async Task<IActionResult> BloodSugar(BloodSugarDto bloodSugar,string uuid)
         {
             BloodSugar _bloodsugar = new BloodSugar()
@@ -82,7 +80,6 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
-
         public async Task<IActionResult> HbA1cUpload(HbA1cDto hbA1Cdto,string uuid)
         {
             HbA1c _hbA1C = new HbA1c()
@@ -90,8 +87,6 @@ namespace PuyuanDotNet8.Services
                 Uuid = uuid,
                 A1c= hbA1Cdto.alc,
             };
-
-
             _context.HbA1c.Add(_hbA1C);
             try
             {
@@ -124,17 +119,14 @@ namespace PuyuanDotNet8.Services
                     updated_At = user.Updated_At,
                 }).ToList() // 將結果轉換為列表
             };
-
             JsonResult success = new JsonResult(response);
             return success;
         }
-
         public async Task<IActionResult> HbA1cDelete(HbA1cDelete hbA1Cdelete,string uuid)
         {
                 var matchedRecords = _context.HbA1c.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList(); // 假设按 Id 排序
                 var indexesToDelete = hbA1Cdelete.ids.Distinct().OrderBy(x => x).ToList(); // 去重并排序
                 var recordsToDelete = new List<HbA1c>(); // 用你的实体类型替换 YourEntityType
-
                 foreach (var index in indexesToDelete)
                 {
                     if (index >= 0 && index < matchedRecords.Count) // 确保索引有效
@@ -142,20 +134,15 @@ namespace PuyuanDotNet8.Services
                         recordsToDelete.Add(matchedRecords[index]);
                     }
                 }
-
                 if (!recordsToDelete.Any())
                 {
                 return fail;
                 }
                 // 删除记录
                 _context.HbA1c.RemoveRange(recordsToDelete);
-
                 // 保存更改
                 await _context.SaveChangesAsync();
-
                 return success;
         }
-
-
     }    
 }

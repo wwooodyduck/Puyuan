@@ -7,24 +7,21 @@ namespace PuyuanDotNet8.Helpers
     {
         private readonly int bits;
         private readonly byte[] pepper;
-
         public PasswordHelper(IConfiguration configuration)
         {
             bits = configuration.GetValue<int>("Secret:Bits");
             pepper = Convert.FromBase64String(configuration.GetValue<string>("Secret:Pepper"));
         }
-
         private string Hash(string password, byte[] salt)
         {
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100000,
-                numBytesRequested: 1024 / 8
-                ));
+            password: password,
+            salt: salt,
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 100000,
+            numBytesRequested: 1024 / 8
+            ));
         }
-
         private byte[] ConcatSaltAndPepper(byte[] salt)
         {
             byte[] newSalt = new byte[salt.Length + pepper.Length];
@@ -32,7 +29,6 @@ namespace PuyuanDotNet8.Helpers
             Buffer.BlockCopy(pepper, 0, newSalt, salt.Length, pepper.Length);
             return newSalt;
         }
-
         public string HashPassword(string password)
         {
             byte[] salt = new byte[bits / 8];
@@ -43,7 +39,6 @@ namespace PuyuanDotNet8.Helpers
             byte[] newSalt = ConcatSaltAndPepper(salt);
             return Convert.ToBase64String(salt) + ":" + Hash(password, newSalt);
         }
-
         public bool VerifyPassword(string password, string hashedPassword)
         {
             string[] passwordInfo = hashedPassword.Split(':');

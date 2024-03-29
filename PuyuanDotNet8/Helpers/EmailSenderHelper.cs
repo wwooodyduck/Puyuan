@@ -15,7 +15,6 @@ namespace PuyuanDotNet8.Helpers
             var emailMessage = CreateEmailMessage(message);
             Send(emailMessage);
         }
-
         private MimeMessage CreateEmailMessage(MessageDto message)
         {
             var emailMessage = new MimeMessage();
@@ -23,7 +22,6 @@ namespace PuyuanDotNet8.Helpers
             emailMessage.To.Add(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
-
             return emailMessage;
         }
 

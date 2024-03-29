@@ -12,15 +12,11 @@ namespace PuyuanDotNet8.Services
         private readonly IMapper _mapper;
         JsonResult success = new JsonResult(new { status = "0" });
         JsonResult fail= new JsonResult(new { status = "1" });
-        JsonResult fail2 = new JsonResult(new { status = "2" });
-        JsonResult fail3 = new JsonResult(new { status = "3" });
-        JsonResult fail4 = new JsonResult(new { status = "4" });
         public DailyDietServices(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
-
         public async Task<IActionResult> DailyDietuploald(DailyDietDto dailyDietDto,string uuid)
         {
             DiaryDiet _diaryDiet = new DiaryDiet()
@@ -49,7 +45,6 @@ namespace PuyuanDotNet8.Services
                 status = "0",
                 image_url = _diaryDiet.Image,
             };
-
             JsonResult success = new JsonResult(response);
             return success;
         }
@@ -102,28 +97,23 @@ namespace PuyuanDotNet8.Services
             await _context.SaveChangesAsync();
             return success;
         }
-
         public async Task<IActionResult> DairyList(DairyListDto dairyList,string uuid)
         {
             if (!DateTime.TryParse(dairyList.date, out var recordedAt))
             {
-                // 如果转换失败，返回错误消息
                 return fail;
             }
-
-            // 使用转换后的日期进行查询
             var bloodPressureContent = _context.BloodPressure.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
             var weightcontent = _context._Weight.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
             var bloodsugarcontent = _context.BloodSugar.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
             var dairydietcontent = _context.DiaryDiet.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
-
             if (weightcontent == null)
             {
-                return fail2;
+                return fail;
             }
             if(bloodsugarcontent == null)
             {
-                return fail3;
+                return fail;
             }
             if (bloodPressureContent == null)
             {
@@ -131,69 +121,68 @@ namespace PuyuanDotNet8.Services
             }
             if(dairydietcontent == null)
             {
-                return fail4;
+                return fail;
             }
             var respone = new
+            {
+                status = "0",
+                diary = new
                 {
-                    status = "0",
-                    diary = new
+                    blood_pressure = new
                     {
-                        blood_pressure = new
+                        id = bloodPressureContent.Id,
+                        user_id = bloodPressureContent.Uuid,
+                        systolic = bloodPressureContent.Systolic,
+                        diastolic = bloodPressureContent.Diastolic,
+                        pulse = bloodPressureContent.Pulse,
+                        recorded_at = bloodPressureContent.Recorded_At,
+                        type = "blood_pressure"
+                    },
+                    weight = new
+                    {
+                        id = weightcontent.Id,
+                        user_id = weightcontent.Uuid,
+                        weight = weightcontent.Weight,
+                        body_fat = weightcontent.Body_Fat,
+                        bmi = weightcontent.Bmi,
+                        recorded_at = weightcontent.Recorded_At,
+                        type = "weight"
+                    },
+                    bloodsugar = new
+                    {
+                        id = bloodsugarcontent.Id,
+                        user_id = bloodsugarcontent.Uuid,
+                        sugar = bloodsugarcontent.Sugar,
+                        timeperiod = bloodsugarcontent.Timeperiod,
+                        recorded_at = bloodsugarcontent.Recorded_At,
+                        type = "blood_sugar"
+                    },
+                    diet = new
+                    {
+                        id = dairydietcontent.Id,
+                        user_id = dairydietcontent.Uuid,
+                        description = dairydietcontent.Description,
+                        meal = dairydietcontent.Meal,
+                        tag = new
                         {
-                            id = bloodPressureContent.Id,
-                            user_id = bloodPressureContent.Uuid,
-                            systolic = bloodPressureContent.Systolic,
-                            diastolic = bloodPressureContent.Diastolic,
-                            pulse = bloodPressureContent.Pulse,
-                            recorded_at = bloodPressureContent.Recorded_At,
-                            type = "blood_pressure"
+                            name = dairydietcontent.Tag
                         },
-                        weight = new
+                        image = new
                         {
-                            id = weightcontent.Id,
-                            user_id = weightcontent.Uuid,
-                            weight = weightcontent.Weight,
-                            body_fat = weightcontent.Body_Fat,
-                            bmi = weightcontent.Bmi,
-                            recorded_at = weightcontent.Recorded_At,
-                            type = "weight"
+                            dairydietcontent.Image
                         },
-                        bloodsugar = new
+                        location = new
                         {
-                            id = bloodsugarcontent.Id,
-                            user_id = bloodsugarcontent.Uuid,
-                            sugar = bloodsugarcontent.Sugar,
-                            timeperiod = bloodsugarcontent.Timeperiod,
-                            recorded_at = bloodsugarcontent.Recorded_At,
-                            type = "blood_sugar"
+                            lat = dairydietcontent.Lat,
+                            lng = dairydietcontent.Lng,
                         },
-                        diet = new
-                        {
-                            id = dairydietcontent.Id,
-                            user_id = dairydietcontent.Uuid,
-                            description = dairydietcontent.Description,
-                            meal = dairydietcontent.Meal,
-                            tag = new
-                            {
-                                name = dairydietcontent.Tag
-                            },
-                            image = new
-                            {
-                                dairydietcontent.Image
-                            },
-                            location = new
-                            {
-                                lat = dairydietcontent.Lat,
-                                lng = dairydietcontent.Lng,
-                            },
-                            recorded_at = dairydietcontent.Recorded_At,
-                            type = "diet",
-                            reply = "安安"
-
-                        }
+                        recorded_at = dairydietcontent.Recorded_At,
+                        type = "diet",
+                        reply = "安安"
                     }
-                };
-                JsonResult success = new JsonResult(respone);
+                }
+            };
+            JsonResult success = new JsonResult(respone);
             return success;
         }
     }

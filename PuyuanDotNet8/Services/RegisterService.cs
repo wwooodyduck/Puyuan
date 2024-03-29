@@ -9,18 +9,14 @@ namespace PuyuanDotNet8.Services
         private readonly DataContext _context;
         private readonly PasswordHelper _passwordHelper;
         private readonly IMapper _mapper;
-
         JsonResult success = new JsonResult(new { status = "0" });
         JsonResult fail = new JsonResult(new { status = "1" });
-        
-        
         public RegisterService(DataContext context,PasswordHelper passwordHelper, IMapper mapper)
         {
             _context = context;
             _passwordHelper = passwordHelper;
             _mapper = mapper;
         }
-
         public async Task<IActionResult> Register(RegisterDto register)
         {
 
@@ -29,7 +25,6 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
             // 創建一個新的UserProfile
             UserProfile userProfile = new UserProfile()
             {
@@ -38,7 +33,6 @@ namespace PuyuanDotNet8.Services
             };
             userProfile = _mapper.Map(register, userProfile);// 將RegisterDto的屬性映射到UserProfile上
             _context.UserProfile.Add(userProfile);// 將新的UserProfile添加到資料庫上下文中
-
             // 為新用戶創建相關數據（UserSet, Default, Setting, MedicalInformation）
             UserSet userSet = new UserSet()
             {
@@ -46,31 +40,26 @@ namespace PuyuanDotNet8.Services
                 Invite_Code = RandomCodeHelper.Create(10),
                 Created_At = userProfile.Created_At
             };
-
             Default @default = new Default()
             {
                 Uuid = userProfile.Uuid,
                 Created_At = userProfile.Created_At,
             };
-
             Setting setting = new Setting()
             {
                 Uuid = userProfile.Uuid,
                 Created_At = userProfile.Created_At,
             };
-
             MedicalInformation medical = new MedicalInformation()
             {
                 Uuid = userProfile.Uuid,
                 Created_At = userProfile.Created_At
             };
-
             // 將相關數據添加到資料庫上下文中
             _context.UserSet.Add(userSet);
             _context.Default.Add(@default);
             _context.Setting.Add(setting);
             _context.MedicalInformation.Add(medical);
-
             //嘗試保存更改到資料庫
             try
             {
@@ -85,7 +74,6 @@ namespace PuyuanDotNet8.Services
         public async Task<IActionResult> ResgisterComfirm(RegisterComfirmDto registerComfirm)
         {
             var user = _context.UserProfile.SingleOrDefault(e => e.Username == registerComfirm.Account);
-
             if (user == null)
             {
                 return fail;
@@ -95,6 +83,5 @@ namespace PuyuanDotNet8.Services
                 return success;
             }
         }
-        
     }
 }

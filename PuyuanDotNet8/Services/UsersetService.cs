@@ -18,7 +18,6 @@ namespace PuyuanDotNet8.Services
             _context = context;
             _mapper = mapper;
         }
-
         public async Task<IActionResult> UserSet(UsersetDto userset,string uuid)
         {
             var usersets = _context.UserSet.SingleOrDefault(e => e.Uuid.Equals(uuid));
@@ -35,12 +34,10 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
-
         public async Task<IActionResult> UserDefault(UserDefaultDto userDefault,string uuid)
         {
             var userdefault = _context.Default.SingleOrDefault(e => e.Uuid.Equals(uuid));
             userdefault=_mapper.Map(userDefault, userdefault);
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -51,7 +48,6 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
-
         public async Task<IActionResult> Setting(SettingDto setting,string uuid)
         {
             var usersetting = _context.Setting.SingleOrDefault(e => e.Uuid.Equals(uuid));
@@ -90,7 +86,6 @@ namespace PuyuanDotNet8.Services
                     .Where(e => e.Uuid.Equals(uuid))
                    .OrderByDescending(e => e.Recorded_At) // 假设CreatedAt是一个时间戳字段
                    .FirstOrDefault();
-
             var _bloodsugar = _context.BloodSugar
                     .Where(e => e.Uuid.Equals(uuid))
                    .OrderByDescending(e => e.Recorded_At) // 假设CreatedAt是一个时间戳字段
@@ -107,7 +102,6 @@ namespace PuyuanDotNet8.Services
                 blood_sugar= _bloodsugar.Recorded_At,
                 diet= _diet.Recorded_At
             };
-
             JsonResult success = new JsonResult(response);
             return success;
         }
@@ -116,7 +110,6 @@ namespace PuyuanDotNet8.Services
             var bloodsugarRecord = await _context.BloodSugar
                                       .Where(e => lastRecord.diets.Contains(e.Timeperiod))
                                       .FirstOrDefaultAsync();
-
             var matchedbloodPressure = _context.BloodPressure.Where(h => h.Uuid == uuid).OrderByDescending(e => e.Recorded_At).FirstOrDefault();
             var matchedweights=_context._Weight.Where(h=>h.Uuid==uuid).OrderByDescending(e => e.Recorded_At).FirstOrDefault();
             var response = new
@@ -158,7 +151,6 @@ namespace PuyuanDotNet8.Services
             var userprofilecontent=_context.UserProfile.SingleOrDefault(h=>h.Uuid.Equals(uuid));
             var userdefaultcontent = _context.Default.SingleOrDefault(h => h.Uuid.Equals(uuid));
             var settingcontent = _context.Setting.SingleOrDefault(h => h.Uuid.Equals(uuid));
-
             var response = new
             {
                 status = 0,

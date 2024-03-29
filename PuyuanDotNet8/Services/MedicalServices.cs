@@ -21,7 +21,6 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-            
             var response = new
             {
                 status = "0",
@@ -40,11 +39,9 @@ namespace PuyuanDotNet8.Services
                     }
                 }
             };
-
             JsonResult success = new JsonResult(response);
             return success;
         }
-
         public async Task<IActionResult> MedcialUpdate(MedicalDto MedicalDto,string uuid)
         {
             var user = _context.MedicalInformation.FirstOrDefault(h => h.Uuid == uuid);

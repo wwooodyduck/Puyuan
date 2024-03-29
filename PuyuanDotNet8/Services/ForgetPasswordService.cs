@@ -13,8 +13,6 @@ namespace PuyuanDotNet8.Services
         private readonly PasswordHelper _passwordHelper;
         JsonResult success = new JsonResult(new { status = "0" });
         JsonResult fail = new JsonResult(new { status = "1" });
-
-
         public ForgetPasswordService(DataContext context, EmailSenderHelper emailService, JwtHelper jwtHelper, RandomCodeHelper randomCodeHelper, PasswordHelper passwordHelper)
         {
             _context = context;
@@ -23,13 +21,10 @@ namespace PuyuanDotNet8.Services
             _randomCodeHelper = randomCodeHelper;
             _passwordHelper = passwordHelper;
         }
-
         public async Task<IActionResult> ForgotPassword(SendVerificationDto forgets)
         {
             var newPassword = RandomCodeHelper.Create(10);
-
             var hashpassword= _passwordHelper.HashPassword(newPassword);
-
             var user = _context.UserProfile
                 .Include(e => e.UserSet)
                 .SingleOrDefault(e => e.Email.Equals(forgets.Email) && e.Phone.Equals(forgets.Phone));
@@ -37,11 +32,8 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-            
-           
             user.Password = hashpassword;
             _context.SaveChanges();
-
             var message = new MessageDto(
                 forgets.Email,
                 "普元忘記密碼",
@@ -54,7 +46,6 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -63,14 +54,11 @@ namespace PuyuanDotNet8.Services
             {
                 return fail;
             }
-
             return success;
         }
-
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPassword, string uuid)
         {
             var user = _context.UserProfile.Include(e => e.UserSet).SingleOrDefault(e => e.Uuid.Equals(uuid));
-
             if (user == null)
             {
                 return fail;
@@ -80,6 +68,5 @@ namespace PuyuanDotNet8.Services
             _context.SaveChangesAsync();
             return success;
         }
-
     }
 }
