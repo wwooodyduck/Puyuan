@@ -28,8 +28,8 @@ namespace PuyuanDotNet8.Controllers
             return result;
         }
 
-        [HttpPost("comfirm")]
-        public async Task<IActionResult> ResgisterComfirm(RegisterComfirmDto registerComfirm)
+        [HttpGet("comfirm")]
+        public async Task<IActionResult> ResgisterComfirm([FromQuery]RegisterComfirmDto registerComfirm)
         {
             if (registerComfirm == null)
             {

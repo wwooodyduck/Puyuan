@@ -73,7 +73,7 @@ namespace PuyuanDotNet8.Services
         }
         public async Task<IActionResult> ResgisterComfirm(RegisterComfirmDto registerComfirm)
         {
-            var user = _context.UserProfile.SingleOrDefault(e => e.Username == registerComfirm.Account);
+            var user = _context.UserProfile.SingleOrDefault(e => e.Email == registerComfirm.email);
             if (user == null)
             {
                 return fail;

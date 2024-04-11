@@ -24,6 +24,6 @@ namespace PuyuanDotNet8.Dtos
     {
         [MaxLength(100)]
         [DefaultValue("root")]
-        public string Account { get; set; }
+        public string email { get; set; }
     }
 }

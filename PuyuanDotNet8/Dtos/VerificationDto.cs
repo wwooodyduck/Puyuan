@@ -18,9 +18,5 @@ namespace PuyuanDotNet8.Dtos
         [MaxLength(100)]
         [DefaultValue("root@mail.com")]
         public string Email { get; set; }
-        /*[Phone]
-        [MaxLength(100)]
-        [DefaultValue("0987654321")]
-        public string Phone { get; set; }*/
     }
 }
