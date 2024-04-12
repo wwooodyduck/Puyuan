@@ -7,11 +7,11 @@ namespace PuyuanDotNet8.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class authController : ControllerBase
     {
         private readonly AuthService _authService;
 
-        public AuthController(AuthService authService)
+        public authController(AuthService authService)
         {
             _authService = authService;
         }

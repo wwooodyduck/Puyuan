@@ -8,12 +8,12 @@ namespace PuyuanDotNet8.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterController : ControllerBase
+    public class registerController : ControllerBase
     {
         private readonly RegisterService _registerService;
         
 
-        public RegisterController(RegisterService registerService)
+        public registerController(RegisterService registerService)
         {
             _registerService = registerService;
         }
@@ -28,7 +28,7 @@ namespace PuyuanDotNet8.Controllers
             return result;
         }
 
-        [HttpGet("comfirm")]
+        [HttpGet("check")]
         public async Task<IActionResult> ResgisterComfirm([FromQuery]RegisterComfirmDto registerComfirm)
         {
             if (registerComfirm == null)

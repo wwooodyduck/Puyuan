@@ -62,6 +62,425 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
+
+        public async Task<IActionResult> BloodPressureUpload(BodyDto Bloodpressure, string uuid)
+        {
+            BloodPressure bloodPressure = new BloodPressure()
+            {
+                Uuid = uuid,
+                Systolic = Bloodpressure.systolic,
+                Diastolic = Bloodpressure.diastolic,
+                Pulse = Bloodpressure.pulse
+            };
+            bloodPressure.Recorded_At = DateTime.UtcNow;
+            _context.BloodPressure.Add(bloodPressure);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+        }
+
+        public async Task<IActionResult> WeightUpload(WeightDto weightdto, string uuid)
+        {
+            _Weight _weight = new _Weight()
+            {
+                Uuid = uuid,
+                Weight = weightdto.weight,
+                Body_Fat = weightdto.body_fat,
+                Bmi = weightdto.bmi
+            };
+
+            _context._Weight.Add(_weight);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+        }
+
+        public async Task<IActionResult> BloodSugar(BloodSugarDto bloodSugar, string uuid)
+        {
+            BloodSugar _bloodsugar = new BloodSugar()
+            {
+                Uuid = uuid,
+                Sugar = bloodSugar.sugar,
+                Timeperiod = bloodSugar.timeperiod
+            };
+            bloodSugar.recorded_at = DateTime.Now;
+            _context.BloodSugar.Add(_bloodsugar);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+        }
+
+        public async Task<IActionResult> DairyList(DairyListDto dairyList, string uuid)
+        {
+            if (!DateTime.TryParse(dairyList.date, out var recordedAt))
+            {
+                return fail;
+            }
+            var bloodPressureContent = _context.BloodPressure.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+            var weightcontent = _context._Weight.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+            var bloodsugarcontent = _context.BloodSugar.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+            var dairydietcontent = _context.DiaryDiet.FirstOrDefault(h => h.Uuid.Equals(uuid) && h.Recorded_At.Date == recordedAt.Date);
+            if (weightcontent == null)
+            {
+                return fail;
+            }
+            if (bloodsugarcontent == null)
+            {
+                return fail;
+            }
+            if (bloodPressureContent == null)
+            {
+                return fail;
+            }
+            if (dairydietcontent == null)
+            {
+                return fail;
+            }
+            var respone = new
+            {
+                status = "0",
+                diary = new
+                {
+                    blood_pressure = new
+                    {
+                        id = bloodPressureContent.Id,
+                        user_id = bloodPressureContent.Uuid,
+                        systolic = bloodPressureContent.Systolic,
+                        diastolic = bloodPressureContent.Diastolic,
+                        pulse = bloodPressureContent.Pulse,
+                        recorded_at = bloodPressureContent.Recorded_At,
+                        type = "blood_pressure"
+                    },
+                    weight = new
+                    {
+                        id = weightcontent.Id,
+                        user_id = weightcontent.Uuid,
+                        weight = weightcontent.Weight,
+                        body_fat = weightcontent.Body_Fat,
+                        bmi = weightcontent.Bmi,
+                        recorded_at = weightcontent.Recorded_At,
+                        type = "weight"
+                    },
+                    bloodsugar = new
+                    {
+                        id = bloodsugarcontent.Id,
+                        user_id = bloodsugarcontent.Uuid,
+                        sugar = bloodsugarcontent.Sugar,
+                        timeperiod = bloodsugarcontent.Timeperiod,
+                        recorded_at = bloodsugarcontent.Recorded_At,
+                        type = "blood_sugar"
+                    },
+                    diet = new
+                    {
+                        id = dairydietcontent.Id,
+                        user_id = dairydietcontent.Uuid,
+                        description = dairydietcontent.Description,
+                        meal = dairydietcontent.Meal,
+                        tag = new
+                        {
+                            name = dairydietcontent.Tag
+                        },
+                        image = new
+                        {
+                            dairydietcontent.Image
+                        },
+                        location = new
+                        {
+                            lat = dairydietcontent.Lat,
+                            lng = dairydietcontent.Lng,
+                        },
+                        recorded_at = dairydietcontent.Recorded_At,
+                        type = "diet",
+                        reply = "安安"
+                    }
+                }
+            };
+            JsonResult success = new JsonResult(respone);
+            return success;
+        }
+
+        public async Task<IActionResult> DailyDietuploald(DailyDietDto dailyDietDto, string uuid)
+        {
+            DiaryDiet _diaryDiet = new DiaryDiet()
+            {
+                Uuid = uuid,
+                Description = dailyDietDto.description,
+                Meal = dailyDietDto.meal,
+                Tag = dailyDietDto.tag,
+                Image = dailyDietDto.image,
+                Lat = dailyDietDto.lat,
+                Lng = dailyDietDto.lng,
+                Recorded_At = dailyDietDto.recorded_at,
+            };
+            _context.DiaryDiet.Add(_diaryDiet);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)// 如果存在資料庫更新發生異常，則返回失敗结果
+            {
+                return fail;
+            }
+
+            var response = new
+            {
+                status = "0",
+                image_url = _diaryDiet.Image,
+            };
+            JsonResult success = new JsonResult(response);
+            return success;
+        }
+
+        public async Task<IActionResult> DairyDelete(DairyDelete dairyDelete, string uuid)
+        {
+            var bloodSugars = _context.BloodSugar.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList();
+            var bloodSugarsindex = dairyDelete.blood_sugar.Distinct().OrderBy(x => x).ToList();
+            var bloodsugarrecord = new List<BloodSugar>();
+            foreach (var index in bloodSugarsindex)
+            {
+                if (index >= 0 && index < bloodSugars.Count) // 确保索引有效
+                {
+                    bloodsugarrecord.Add(bloodSugars[index]);
+                }
+            }
+            var bloodpressure = _context.BloodPressure.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList();
+            var bloodpressuresindex = dairyDelete.blood_pressure.Distinct().OrderBy(x => x).ToList();
+            var bloodpressurerecord = new List<BloodPressure>();
+            foreach (var index in bloodpressuresindex)
+            {
+                if (index >= 0 && index < bloodpressure.Count) // 确保索引有效
+                {
+                    bloodpressurerecord.Add(bloodpressure[index]);
+                }
+            }
+            var diaryDiets = _context.DiaryDiet.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList();
+            var dietsindex = dairyDelete.diary_diets.Distinct().OrderBy(x => x).ToList();
+            var DiaryDietrecord = new List<DiaryDiet>();
+            foreach (var index in dietsindex)
+            {
+                if (index >= 0 && index < diaryDiets.Count) // 确保索引有效
+                {
+                    DiaryDietrecord.Add(diaryDiets[index]);
+                }
+            }
+            var weights = _context._Weight.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList();
+            var weightsindex = dairyDelete.weights.Distinct().OrderBy(x => x).ToList();
+            var weightrecord = new List<_Weight>();
+            foreach (var index in weightsindex)
+            {
+                if (index >= 0 && index < weights.Count) // 确保索引有效
+                {
+                    weightrecord.Add(weights[index]);
+                }
+            }
+            _context.BloodSugar.RemoveRange(bloodsugarrecord);
+            _context.BloodPressure.RemoveRange(bloodpressurerecord);
+            _context.DiaryDiet.RemoveRange(DiaryDietrecord);
+            _context._Weight.RemoveRange(weightrecord);
+            await _context.SaveChangesAsync();
+            return success;
+        }
+
+        public async Task<IActionResult> HbA1cGet(string uuid)
+        {
+            var user = _context.HbA1c.Where(h => h.Uuid == uuid).ToList();
+            if (user == null)
+            {
+                return fail;
+            }
+            var response = new
+            {
+                status = "0",
+                a1cs = user.Select(user => new
+                {
+                    id = user.Id,
+                    user_id = user.Uuid, // 重命名 uuid 為 user_id
+                    a1c = user.A1c,
+                    recorded_At = user.Recorded_At,
+                    created_At = user.Created_At,
+                    updated_At = user.Updated_At,
+                }).ToList() // 將結果轉換為列表
+            };
+            JsonResult success = new JsonResult(response);
+            return success;
+        }
+
+        public async Task<IActionResult> HbA1cUpload(HbA1cDto hbA1Cdto, string uuid)
+        {
+            HbA1c _hbA1C = new HbA1c()
+            {
+                Uuid = uuid,
+                A1c = hbA1Cdto.alc,
+            };
+            _context.HbA1c.Add(_hbA1C);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+
+        }
+
+        public async Task<IActionResult> HbA1cDelete(HbA1cDelete hbA1Cdelete, string uuid)
+        {
+            var matchedRecords = _context.HbA1c.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList(); // 假设按 Id 排序
+            var indexesToDelete = hbA1Cdelete.ids.Distinct().OrderBy(x => x).ToList(); // 去重并排序
+            var recordsToDelete = new List<HbA1c>(); // 用你的实体类型替换 YourEntityType
+            foreach (var index in indexesToDelete)
+            {
+                if (index >= 0 && index < matchedRecords.Count) // 确保索引有效
+                {
+                    recordsToDelete.Add(matchedRecords[index]);
+                }
+            }
+            if (!recordsToDelete.Any())
+            {
+                return fail;
+            }
+            // 删除记录
+            _context.HbA1c.RemoveRange(recordsToDelete);
+            // 保存更改
+            await _context.SaveChangesAsync();
+            return success;
+        }
+
+        public async Task<IActionResult> MedcialGet(string uuid)
+        {
+            var user = _context.MedicalInformation.FirstOrDefault(h => h.Uuid == uuid);
+            if (user == null)
+            {
+                return fail;
+            }
+            var response = new
+            {
+                status = "0",
+                user = new
+                {
+                    user = new
+                    {
+                        id = user.Id,
+                        user_id = user.Uuid, // 重命名 uuid 為 user_id
+                        diabetes_type = user.Diabetes_Type,
+                        oad = user.Oad,
+                        insulin = user.Insulin,
+                        anti_hypertensive = user.Anti_Hypertensives,
+                        createed_at = user.Created_At,
+                        updated_at = user.Updated_At,
+                    }
+                }
+            };
+            JsonResult success = new JsonResult(response);
+            return success;
+        }
+
+        public async Task<IActionResult> MedcialUpdate(MedicalDto MedicalDto, string uuid)
+        {
+            var user = _context.MedicalInformation.FirstOrDefault(h => h.Uuid == uuid);
+            if (user == null)
+            {
+                return fail;
+            }
+            user = _mapper.Map(MedicalDto, user);
+            user.Updated_At = DateTime.Now;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)// 如果存在資料庫更新發生異常，則返回失敗结果
+            {
+                return fail;
+            }
+            return success;
+        }
+
+        public async Task<IActionResult> Druginfoget(DrugDto drugget, string uuid)
+        {
+            var user = _context.DrugInformation.Where(h => h.Uuid == uuid && h.Drug_Type == drugget.type);
+            if (user == null)
+            {
+                return fail;
+            }
+            var response = new
+            {
+                status = "0",
+                a1cs = user.Select(user => new
+                {
+                    id = user.Id,
+                    user_id = user.Uuid,
+                    type = user.Drug_Type,
+                    name = user.Name,
+                    recorded_at = user.Recorded_At
+                })
+            };
+            JsonResult success = new JsonResult(response);
+            return success;
+        }
+
+        public async Task<IActionResult> DruginfoUpload(DrugUploadDto drugUpload, string uuid)
+        {
+            var user = _context.DrugInformation.FirstOrDefault(h => h.Uuid == uuid);
+            DrugInformation _druginfo = new DrugInformation()
+            {
+                Uuid = uuid,
+                Drug_Type = drugUpload.Type,
+                Name = drugUpload.Name,
+                Recorded_At = drugUpload.recorded_at
+            };
+            _druginfo.Created_At = DateTime.Now;
+            _druginfo.Updated_At = DateTime.Now;
+            _context.DrugInformation.Add(_druginfo);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return fail;
+            }
+            return success;
+        }
+        public async Task<IActionResult> DrugInfoDelete(DrugDeleteDto drugDelete, string uuid)
+        {
+            var matchedRecords = _context.DrugInformation.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList(); // 假设按 Id 排序
+            var indexesToDelete = drugDelete.ids.Distinct().OrderBy(x => x).ToList(); // 去重并排序
+            var recordsToDelete = new List<DrugInformation>(); // 用你的实体类型替换 YourEntityType
+            foreach (var index in indexesToDelete)
+            {
+                if (index >= 0 && index < matchedRecords.Count) // 确保索引有效
+                {
+                    recordsToDelete.Add(matchedRecords[index]);
+                }
+            }
+            if (!recordsToDelete.Any())
+            {
+                return fail;
+            }
+            _context.DrugInformation.RemoveRange(recordsToDelete);
+            await _context.SaveChangesAsync();
+            return success;
+        }
         public async Task<IActionResult> BadgeUpdate(BadgeUpdateDto badgeUpdate,string uuid)
         {
             var user = _context.UserSet.SingleOrDefault(e => e.Uuid.Equals(uuid));

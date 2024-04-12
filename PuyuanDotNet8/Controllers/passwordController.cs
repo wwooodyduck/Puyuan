@@ -6,16 +6,16 @@ namespace PuyuanDotNet8.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ForgetpasswordController : ControllerBase
+    public class passwordController : ControllerBase
     {
         private readonly ForgetPasswordService _forgotPasswordService;
 
-        public ForgetpasswordController(ForgetPasswordService forgotPasswordService)
+        public passwordController(ForgetPasswordService forgotPasswordService)
         {
             _forgotPasswordService = forgotPasswordService;
         }
 
-        [HttpPost]
+        [HttpPost("forgot")]
         public async Task<IActionResult> ForgotPassword(SendVerificationDto forgets)
         {
             if (forgets == null)
