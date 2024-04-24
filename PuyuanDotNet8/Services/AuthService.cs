@@ -19,16 +19,16 @@ namespace PuyuanDotNet8.Services
             JsonResult uncheckMail = new JsonResult(new { status = "2" });
             var user = _context.UserProfile
                         .Include(e => e.UserSet)
-                        .SingleOrDefault(e => e.Email.Equals(login.email));
+                        .SingleOrDefault(e => e.email.Equals(login.email));
             if (user == null)
             {
                 return fail;
-            }
+            }   
             if(!user.UserSet.Verified)
             {
                 return fail;
             }
-            if(!_passwordHelper.VerifyPassword(login.Password, user.Password))
+            if(!_passwordHelper.VerifyPassword(login.password, user.password))
             {
                 return fail;
             }

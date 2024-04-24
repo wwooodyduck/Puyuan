@@ -249,5 +249,7 @@ namespace PuyuanDotNet8.Controllers
             var result = await _usersetService.Userinfo(uuid);
             return result;
         }
+
+       
     }
 }

@@ -15,9 +15,9 @@ public partial class UserProfile
     [MaxLength(100)]
     public string? Phone { get; set; }
     [MaxLength(100)]
-    public string? Email { get; set; }
+    public string? email { get; set; }
     [MaxLength(256)]
-    public string Password { get; set; }
+    public string password { get; set; }
     [MaxLength(100)]
     public string? Fb_Id { get; set; }
 

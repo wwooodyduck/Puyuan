@@ -7,8 +7,8 @@ namespace PuyuanDotNet8.Services
     {
         private readonly DataContext _datacontext;
         private readonly EmailSenderHelper _emailSender;
-        JsonResult success = new JsonResult(new { status = "0" });
-        JsonResult fail = new JsonResult(new { status = "1" });
+        JsonResult success = new JsonResult(new { status = "0", message = "成功" });
+        JsonResult fail = new JsonResult(new { status = "1", message = "失敗" });
         public VerificationService(
             EmailSenderHelper emailSenderHelper,
             DataContext context)
@@ -20,11 +20,12 @@ namespace PuyuanDotNet8.Services
         {
             var user = _datacontext.UserProfile
                 .Include(e => e.UserSet)
-                .SingleOrDefault(e => e.Email.Equals(sendVerification.Email));
+                .SingleOrDefault(e => e.email.Equals(sendVerification.email));
             if (user == null)
             {
                 return fail;
             }
+
             if (user.UserSet.Verified.Equals(true))
             {
                 return fail;
@@ -46,9 +47,10 @@ namespace PuyuanDotNet8.Services
                 _datacontext.Verifications.Update(verif);
             }
             var message = new MessageDto(
-                sendVerification.Email,
+                sendVerification.email,
                 "普元驗證訊息",
                 $"Verification Code: {verifCode}");
+            _emailSender.SendEmail(message);
             try
             {
                 _emailSender.SendEmail(message);
@@ -71,26 +73,27 @@ namespace PuyuanDotNet8.Services
         {
             var user = _datacontext.UserProfile
                 .Include(e => e.UserSet)
-                .SingleOrDefault(e => e.Email.Equals(checkVerification.Email));
+                .SingleOrDefault(e => e.email.Equals(checkVerification.email));
             if (user == null)
             {
                 return fail;
             }
             var verfi = _datacontext.Verifications.SingleOrDefault(e => e.Uuid.Equals(user.Uuid));
-            if (!user.UserSet.Verified && verfi.VerifictionCode.Equals(checkVerification.VerifictionCode))
+            if (!user.UserSet.Verified && verfi.VerifictionCode.Equals(checkVerification.code))
             {
                 user.UserSet.Verified = true;
                 _datacontext.Update(user);
                 _datacontext.Remove(verfi);
             }
-            try
+            await _datacontext.SaveChangesAsync();
+            /*try
             {
                 await _datacontext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 return fail;
-            }
+            }*/
             return success;
         }
     }

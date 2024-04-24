@@ -20,8 +20,8 @@ namespace PuyuanDotNet8.Migrations
                     Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    password = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Fb_Id = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)

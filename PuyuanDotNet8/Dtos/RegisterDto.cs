@@ -14,16 +14,14 @@ namespace PuyuanDotNet8.Dtos
         [EmailAddress]*/
         [MaxLength(100)]
         [DefaultValue("root@mail.com")]
-        public string? Email { get; set; }
+        public string email { get; set; }
         [MaxLength(100)]
-        [DefaultValue("root")]
-        public string Password { get; set; }
+        public string password { get; set; }
     }
 
     public class RegisterComfirmDto
     {
         [MaxLength(100)]
-        [DefaultValue("root")]
         public string email { get; set; }
     }
 }

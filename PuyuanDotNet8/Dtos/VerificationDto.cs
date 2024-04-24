@@ -7,16 +7,16 @@ namespace PuyuanDotNet8.Dtos
     public class CheckVerificationDto
     {
        
-        public string Email { get; set; }
+        public string email { get; set; }
         [Display(Name = "code")]
         [MaxLength(100)]
-        public string VerifictionCode { get; set; }
+        public string code { get; set; }
     }
     public class SendVerificationDto
     {
         [EmailAddress]
         [MaxLength(100)]
         [DefaultValue("root@mail.com")]
-        public string Email { get; set; }
+        public string email { get; set; }
     }
 }

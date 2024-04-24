@@ -11,6 +11,6 @@ namespace PuyuanDotNet8.Dtos
 
         [MaxLength(100)]
         [DefaultValue("root2")]
-        public string Password { get; set; }
+        public string password { get; set; }
     }
 }

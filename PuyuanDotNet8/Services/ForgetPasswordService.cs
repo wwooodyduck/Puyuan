@@ -27,15 +27,15 @@ namespace PuyuanDotNet8.Services
             var hashpassword= _passwordHelper.HashPassword(newPassword);
             var user = _context.UserProfile
                 .Include(e => e.UserSet)
-                .SingleOrDefault(e => e.Email.Equals(forgets.Email));
+                .SingleOrDefault(e => e.email.Equals(forgets.email));
             if (user == null)
             {
                 return fail;
             }
-            user.Password = hashpassword;
+            user.password = hashpassword;
             _context.SaveChanges();
             var message = new MessageDto(
-                forgets.Email,
+                forgets.email,
                 "普元忘記密碼",
                 $"Verification Code: {newPassword}");
             try
@@ -64,7 +64,7 @@ namespace PuyuanDotNet8.Services
                 return fail;
             }
             var pw = _passwordHelper.HashPassword(resetPassword.Password);
-            user.Password = pw;
+            user.password = pw;
             _context.SaveChangesAsync();
             return success;
         }

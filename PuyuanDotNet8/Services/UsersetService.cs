@@ -578,7 +578,7 @@ namespace PuyuanDotNet8.Services
                     id=usersetcontent.Uuid,
                     name=usersetcontent.Name,
                     account= userprofilecontent.Username,
-                    email=userprofilecontent.Email,
+                    email=userprofilecontent.email,
                     phone=userprofilecontent.Phone,
                     fb_id=userprofilecontent.Fb_Id,
                     status=usersetcontent.Status,

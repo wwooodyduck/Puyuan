@@ -9,8 +9,8 @@ namespace PuyuanDotNet8.Services
         private readonly DataContext _context;
         private readonly PasswordHelper _passwordHelper;
         private readonly IMapper _mapper;
-        JsonResult success = new JsonResult(new { status = "0" });
-        JsonResult fail = new JsonResult(new { status = "1" });
+        JsonResult success = new JsonResult(new { status = "0", message = "成功" });
+        JsonResult fail = new JsonResult(new { status = "1" , message = "失敗" });
         public RegisterService(DataContext context,PasswordHelper passwordHelper, IMapper mapper)
         {
             _context = context;
@@ -20,7 +20,7 @@ namespace PuyuanDotNet8.Services
         public async Task<IActionResult> Register(RegisterDto register)
         {
 
-            var user = _context.UserProfile.SingleOrDefault(e => e.Email == register.Email);//檢查資料庫有無相同的Username
+            var user = _context.UserProfile.SingleOrDefault(e => e.email == register.email);//檢查資料庫有無相同的email
             if (user != null)
             {
                 return fail;
@@ -29,7 +29,7 @@ namespace PuyuanDotNet8.Services
             UserProfile userProfile = new UserProfile()
             {
                 Uuid = Guid.NewGuid().ToString(),// 生成一個新的UUID
-                Password = _passwordHelper.HashPassword(register.Password)
+                password = _passwordHelper.HashPassword(register.password)
             };
             userProfile = _mapper.Map(register, userProfile);// 將RegisterDto的屬性映射到UserProfile上
             _context.UserProfile.Add(userProfile);// 將新的UserProfile添加到資料庫上下文中
@@ -73,15 +73,16 @@ namespace PuyuanDotNet8.Services
         }
         public async Task<IActionResult> ResgisterComfirm(RegisterComfirmDto registerComfirm)
         {
-            var user = _context.UserProfile.SingleOrDefault(e => e.Email == registerComfirm.email);
+            var user = _context.UserProfile.SingleOrDefault(e => e.email == registerComfirm.email);
             if (user == null)
-            {
-                return fail;
-            }
-            else
             {
                 return success;
             }
+            else
+            {
+                 return fail;
+            }
+            
         }
     }
 }
