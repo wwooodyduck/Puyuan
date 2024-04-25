@@ -7,7 +7,7 @@ namespace PuyuanDotNet8.Services
         private readonly DataContext _context;
         private readonly PasswordHelper _passwordHelper;
         private readonly JwtHelper _jwthelper;
-        JsonResult fail = new JsonResult(new { status = "1" });
+        JsonResult fail = new JsonResult(new { status = "1" ,message="失敗"});
         public AuthService(DataContext context, PasswordHelper passwordHelper, JwtHelper jwtHelper)
         {
             _context = context;
@@ -33,7 +33,7 @@ namespace PuyuanDotNet8.Services
                 return fail;
             }
             var token = _jwthelper.GetJwtToken(user.Uuid, "user");
-            JsonResult success = new JsonResult(new { status = "0", token });
+            JsonResult success = new JsonResult(new { status = "0", message = "成功",token });
             return success;
         }
     }

@@ -11,7 +11,6 @@ namespace PuyuanDotNet8.Controllers
     public class registerController : ControllerBase
     {
         private readonly RegisterService _registerService;
-        
 
         public registerController(RegisterService registerService)
         {
