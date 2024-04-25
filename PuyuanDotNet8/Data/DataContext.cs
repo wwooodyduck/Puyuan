@@ -4,7 +4,7 @@ using PuyuanDotNet8.Data;
 namespace PuyuanDotNet8.Data;
 
 public partial class DataContext : DbContext
-{
+{   
     public DataContext()
     {
     }
