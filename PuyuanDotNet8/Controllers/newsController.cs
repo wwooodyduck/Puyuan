@@ -7,16 +7,16 @@ namespace PuyuanDotNet8.Controllers
     [ApiController]
     public class newsController : ControllerBase
     {
-        private readonly newsservices _newsService;
+        private readonly NewsServices _newsService;
 
-        public newsController(newsservices newsService)
+        public newsController(NewsServices newsService)
         {
             _newsService = newsService;
         }
-        [HttpGet]
+        /*[HttpGet]
         public async Task<IActionResult> news()
         {
 
-        }
+        }*/
     }
 }

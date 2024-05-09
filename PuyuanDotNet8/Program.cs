@@ -74,6 +74,8 @@ builder.Services.AddScoped<VerificationService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ForgetPasswordService>();
 builder.Services.AddScoped<UsersetService>();
+builder.Services.AddScoped<FriendServices>();
+
 builder.Services.AddSingleton<EmailSenderHelper>();builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddSingleton<RandomCodeHelper>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -83,11 +85,11 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 var app = builder.Build();
 // Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}*/
+}
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();

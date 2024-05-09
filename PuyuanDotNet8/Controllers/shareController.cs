@@ -13,10 +13,10 @@ namespace PuyuanDotNet8.Controllers
             _shareServices = shareServices;
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> share()
         {
 
-        }
+        }*/
     }
 }

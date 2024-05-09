@@ -107,7 +107,7 @@ public partial class HbA1c
     [MaxLength(100)]
     public string Uuid { get; set; }
     [MaxLength(20)]
-    public double? A1c { get; set; }
+    public double A1c { get; set; }
     public DateTime Recorded_At { get; set; }
     public DateTime Created_At { get; set; }
     public DateTime? Updated_At { get; set; }
@@ -123,9 +123,9 @@ public partial class MedicalInformation
     [MaxLength(100)]
     public string Uuid { get; set; }
     public int? Diabetes_Type { get; set; }
-    public bool? Oad { get; set; }
-    public bool? Insulin { get; set; }
-    public bool? Anti_Hypertensives { get; set; }
+    public bool Oad { get; set; }
+    public bool Insulin { get; set; }
+    public bool Anti_Hypertensives { get; set; }
     public DateTime Created_At { get; set; }
     public DateTime? Updated_At { get; set; }
 

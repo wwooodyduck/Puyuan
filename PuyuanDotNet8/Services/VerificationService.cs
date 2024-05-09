@@ -86,14 +86,14 @@ namespace PuyuanDotNet8.Services
                 _datacontext.Remove(verfi);
             }
             await _datacontext.SaveChangesAsync();
-            /*try
+            try
             {
                 await _datacontext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {
                 return fail;
-            }*/
+            }
             return success;
         }
     }

@@ -29,6 +29,8 @@ namespace PuyuanDotNet8.Services
             UserProfile userProfile = new UserProfile()
             {
                 Uuid = Guid.NewGuid().ToString(),// 生成一個新的UUID
+                Phone = register.email,
+                
                 password = _passwordHelper.HashPassword(register.password)
             };
             userProfile = _mapper.Map(register, userProfile);// 將RegisterDto的屬性映射到UserProfile上

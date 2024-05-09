@@ -17,14 +17,14 @@ namespace PuyuanDotNet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
                     Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     password = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Fb_Id = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Fb_Id = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
                     Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,31 +83,31 @@ namespace PuyuanDotNet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Suger_Delta_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_Delta_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_Morning_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_Morning_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_Evening_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_Evening_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_Before_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_Before_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_After_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Suger_After_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Systolic_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Systolic_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Diastolic_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Diastolic_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Pulse_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Pulse_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Weight_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Weight_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Bmi_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Bmi_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Body_Fat_Max = table.Column<int>(type: "int", maxLength: 5, nullable: true),
-                    Body_Fat_Min = table.Column<int>(type: "int", maxLength: 5, nullable: true),
+                    Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
+                    Sugar_Delta_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_Delta_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_Morning_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_Morning_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_Evening_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_Evening_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_Before_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_Before_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_After_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Sugar_After_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Systolic_Max = table.Column<int>(type: "int", maxLength: 5, nullable: false, defaultValue: 0),
+                    Systolic_Min = table.Column<int>(type: "int", maxLength: 5, nullable: false, defaultValue: 0),
+                    Diastolic_Max = table.Column<int>(type: "int", maxLength: 5, nullable: false, defaultValue: 0),
+                    Diastolic_Min = table.Column<int>(type: "int", maxLength: 5, nullable: false, defaultValue: 0),
+                    Pulse_Max = table.Column<int>(type: "int", maxLength: 5, nullable: false, defaultValue: 0),
+                    Pulse_Min = table.Column<int>(type: "int", maxLength: 5, nullable: false, defaultValue: 0),
+                    Weight_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Weight_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Bmi_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Bmi_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Body_Fat_Max = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
+                    Body_Fat_Min = table.Column<double>(type: "float", maxLength: 5, nullable: false, defaultValue: 1.0),
                     Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                 },
                 constraints: table =>
                 {
@@ -202,11 +202,11 @@ namespace PuyuanDotNet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    A1c = table.Column<double>(type: "float", maxLength: 20, nullable: true),
-                    Recorded_At = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
+                    A1c = table.Column<double>(type: "float", maxLength: 20, nullable: false, defaultValue: 0.0),
+                    Recorded_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                    Created_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                 },
                 constraints: table =>
                 {
@@ -225,13 +225,13 @@ namespace PuyuanDotNet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Diabetes_Type = table.Column<int>(type: "int", nullable: true),
-                    Oad = table.Column<bool>(type: "bit", nullable: true),
-                    Insulin = table.Column<bool>(type: "bit", nullable: true),
-                    Anti_Hypertensives = table.Column<bool>(type: "bit", nullable: true),
+                    Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
+                    Diabetes_Type = table.Column<int>(type: "int", nullable: true, defaultValue: 0),
+                    Oad = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Insulin = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Anti_Hypertensives = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                 },
                 constraints: table =>
                 {
@@ -284,7 +284,7 @@ namespace PuyuanDotNet8.Migrations
                     Unit_Of_Weight = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Unit_Of_Height = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                 },
                 constraints: table =>
                 {
@@ -349,26 +349,26 @@ namespace PuyuanDotNet8.Migrations
                 columns: table => new
                 {
                     Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Normal"),
-                    Group = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Height = table.Column<int>(type: "int", maxLength: 10, precision: 5, nullable: true),
-                    Weight = table.Column<int>(type: "int", maxLength: 10, precision: 5, nullable: true),
-                    Gender = table.Column<bool>(type: "bit", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
+                    Status = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "VIP"),
+                    Group = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
+                    Height = table.Column<int>(type: "int", maxLength: 10, precision: 5, nullable: false, defaultValue: 0),
+                    Weight = table.Column<int>(type: "int", maxLength: 10, precision: 5, nullable: false, defaultValue: 0),
+                    Gender = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
                     Invite_Code = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UnreadRecordsOne = table.Column<int>(type: "int", maxLength: 10, nullable: false, defaultValue: 0),
-                    UnreadRecordsTwo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "0"),
+                    UnreadRecordsTwo = table.Column<int>(type: "int", maxLength: 100, nullable: false, defaultValue: 0),
                     UnreadRecordsThree = table.Column<int>(type: "int", maxLength: 10, nullable: false, defaultValue: 0),
                     Verified = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Privacy_Policy = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Must_Change_Password = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    Fcm_Id = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Fcm_Id = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
                     Badge = table.Column<int>(type: "int", maxLength: 10, nullable: false, defaultValue: 0),
-                    Login_Times = table.Column<int>(type: "int", maxLength: 20, nullable: false, defaultValue: 0),
+                    login_times = table.Column<int>(type: "int", maxLength: 20, nullable: false, defaultValue: 0),
                     Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                 },
                 constraints: table =>
                 {
@@ -491,8 +491,7 @@ namespace PuyuanDotNet8.Migrations
                 name: "IX_UserProfile_Username",
                 table: "UserProfile",
                 column: "Username",
-                unique: true,
-                filter: "[Username] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Verification_Uuid",

@@ -5,15 +5,21 @@ namespace PuyuanDotNet8.Dtos
 {
     public class UsersetDto
     {
-        public string Name { get; set; }
-        public DateTime? Birthday { get; set; }
-        public int? Height { get; set; }
-        public Boolean? Gender { get; set; }
-        public string Fcm_Id { get; set; }
-        public string Address { get; set; }
-        public int? Weight { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
+        public string name { get; set; }
+
+        [DefaultValue("2003-08-11")]
+        public string birthday { get; set; }
+
+        [DefaultValue("0")]
+        public double height { get; set; }
+
+        [DefaultValue("0")]
+        public string weight { get; set; }
+        public string phone { get; set; }
+        public string email { get; set; }
+        public bool gender { get; set; }
+        public string fcm_id { get; set; }
+        public string address { get; set; }
     }
     public class UserDefaultDto
     {

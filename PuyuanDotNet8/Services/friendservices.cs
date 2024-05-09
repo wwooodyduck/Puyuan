@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PuyuanDotNet8.Services
 {
-    public class friendservices
+    public class FriendServices
     {
         private readonly DataContext _context;
-        public friendservices(DataContext context)
+        public FriendServices(DataContext context)
         {
             _context = context;
-        }
+        }   
 
         public async Task<IActionResult> codeget(string uuid)
         {
@@ -27,7 +27,8 @@ namespace PuyuanDotNet8.Services
         public async Task<IActionResult> groupteam(string uuid)
         {
             var userset = _context.UserSet.SingleOrDefault(e => e.Uuid.Equals(uuid));
-            var share=_context.Share.Where(e => e.Uid.Equals(uuid)).SingleOrDefault();
+            var share=_context.Share.SingleOrDefault(e => e.Uid.Equals(uuid))   ;
+
 
             var respone = new
             {

@@ -24,7 +24,7 @@
 
     public class HbA1cDto
     { 
-        public double? alc { get; set; }
+        public double alc { get; set; }
         public DateTime recorded_at { get; set; }
     }
     public class HbA1cDelete

@@ -14,8 +14,8 @@ namespace PuyuanDotNet8.Profiles
             CreateMap<RegisterDto, UserProfile>()
                 .ForMember(x => x.Created_At, y => y.MapFrom(o => DateTime.Now))
                 .ForMember(x => x.password, y => y.Ignore());
-            CreateMap<UsersetDto, UserProfile>();
-            CreateMap<UsersetDto, UserSet>();
+            //CreateMap<UsersetDto, UserProfile>();
+            //CreateMap<UsersetDto, UserSet>();
             CreateMap<UserDefaultDto, Default>();
             CreateMap<SettingDto, Setting>();
             CreateMap<MedicalDto, MedicalInformation>();

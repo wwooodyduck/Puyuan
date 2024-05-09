@@ -7,9 +7,9 @@ namespace PuyuanDotNet8.Controllers
     [ApiController]
     public class friendController : ControllerBase
     {
-        private readonly friendservices _friendService;
+        private readonly FriendServices _friendService;
 
-        public friendController(friendservices friendService)
+        public friendController(FriendServices friendService)
         {
             _friendService = friendService;
         }

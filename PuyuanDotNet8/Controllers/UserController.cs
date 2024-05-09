@@ -242,7 +242,7 @@ namespace PuyuanDotNet8.Controllers
         }
         
         
-        [HttpGet("user")]
+        [HttpGet]
         public async Task<IActionResult> Userinfo()
         {
             var uuid = User.Claims.First(claim => claim.Type == "jti").Value;

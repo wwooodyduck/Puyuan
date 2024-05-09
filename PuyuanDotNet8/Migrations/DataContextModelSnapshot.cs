@@ -106,104 +106,152 @@ namespace PuyuanDotNet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Bmi_Max")
+                    b.Property<double>("Bmi_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Bmi_Min")
+                    b.Property<double>("Bmi_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Body_Fat_Max")
+                    b.Property<double>("Body_Fat_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Body_Fat_Min")
+                    b.Property<double>("Body_Fat_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
                     b.Property<DateTime>("Created_At")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Diastolic_Max")
+                    b.Property<int>("Diastolic_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<int?>("Diastolic_Min")
+                    b.Property<int>("Diastolic_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<int?>("Pulse_Max")
+                    b.Property<int>("Pulse_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<int?>("Pulse_Min")
+                    b.Property<int>("Pulse_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<int?>("Suger_After_Max")
+                    b.Property<double>("Sugar_After_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_After_Min")
+                    b.Property<double>("Sugar_After_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Before_Max")
+                    b.Property<double>("Sugar_Before_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Before_Min")
+                    b.Property<double>("Sugar_Before_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Delta_Max")
+                    b.Property<double>("Sugar_Delta_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Delta_Min")
+                    b.Property<double>("Sugar_Delta_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Evening_Max")
+                    b.Property<double>("Sugar_Evening_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Evening_Min")
+                    b.Property<double>("Sugar_Evening_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Morning_Max")
+                    b.Property<double>("Sugar_Morning_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Suger_Morning_Min")
+                    b.Property<double>("Sugar_Morning_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Systolic_Max")
+                    b.Property<int>("Systolic_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<int?>("Systolic_Min")
+                    b.Property<int>("Systolic_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<DateTime?>("Updated_At")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("Updated_At")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("Uuid")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
-                    b.Property<int?>("Weight_Max")
+                    b.Property<double>("Weight_Max")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
-                    b.Property<int?>("Weight_Min")
+                    b.Property<double>("Weight_Min")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(5)
-                        .HasColumnType("int");
+                        .HasColumnType("float")
+                        .HasDefaultValue(1.0);
 
                     b.HasKey("Id");
 
@@ -344,23 +392,33 @@ namespace PuyuanDotNet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double?>("A1c")
+                    b.Property<double>("A1c")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
-                        .HasColumnType("float");
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0);
 
                     b.Property<DateTime>("Created_At")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<DateTime>("Recorded_At")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<DateTime?>("Updated_At")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("Uuid")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.HasKey("Id");
 
@@ -377,28 +435,40 @@ namespace PuyuanDotNet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool?>("Anti_Hypertensives")
-                        .HasColumnType("bit");
+                    b.Property<bool>("Anti_Hypertensives")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime>("Created_At")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Diabetes_Type")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<bool?>("Insulin")
-                        .HasColumnType("bit");
+                    b.Property<bool>("Insulin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
-                    b.Property<bool?>("Oad")
-                        .HasColumnType("bit");
+                    b.Property<bool>("Oad")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<DateTime?>("Updated_At")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("Uuid")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.HasKey("Id");
 
@@ -493,8 +563,10 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime?>("Updated_At")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("Updated_At")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("Uuid")
                         .IsRequired()
@@ -592,19 +664,26 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Fb_Id")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("Updated_At")
+                    b.Property<DateTime>("Updated_At")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.Property<string>("Uuid")
                         .IsRequired()
@@ -612,6 +691,7 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("email")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -623,8 +703,7 @@ namespace PuyuanDotNet8.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Username")
-                        .IsUnique()
-                        .HasFilter("[Username] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("UserProfile");
                 });
@@ -636,8 +715,11 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Address")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.Property<int>("Badge")
                         .ValueGeneratedOnAdd()
@@ -645,38 +727,44 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("Birthday")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<DateTime>("Created_At")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Fcm_Id")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
-                    b.Property<bool?>("Gender")
-                        .HasColumnType("bit");
+                    b.Property<bool>("Gender")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Group")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
-                    b.Property<int?>("Height")
+                    b.Property<int>("Height")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
                         .HasPrecision(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<string>("Invite_Code")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Login_Times")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
 
                     b.Property<bool>("Must_Change_Password")
                         .ValueGeneratedOnAdd()
@@ -684,8 +772,11 @@ namespace PuyuanDotNet8.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.Property<bool>("Privacy_Policy")
                         .ValueGeneratedOnAdd()
@@ -697,7 +788,7 @@ namespace PuyuanDotNet8.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("Normal");
+                        .HasDefaultValue("VIP");
 
                     b.Property<int>("UnreadRecordsOne")
                         .ValueGeneratedOnAdd()
@@ -711,25 +802,34 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<string>("UnreadRecordsTwo")
-                        .IsRequired()
+                    b.Property<int>("UnreadRecordsTwo")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("0");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
-                    b.Property<DateTime?>("Updated_At")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("Updated_At")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<bool>("Verified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<int?>("Weight")
+                    b.Property<int>("Weight")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(10)
                         .HasPrecision(5)
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("login_times")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Uuid");
 
@@ -1014,7 +1114,8 @@ namespace PuyuanDotNet8.Migrations
                     b.Navigation("UserSet")
                         .IsRequired();
 
-                    b.Navigation("Verification");
+                    b.Navigation("Verification")
+                        .IsRequired();
 
                     b.Navigation("_Weights");
                 });

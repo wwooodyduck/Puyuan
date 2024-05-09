@@ -12,9 +12,9 @@ namespace PuyuanDotNet8.Services
         {
             _context = context;
         }
-        public async Task<IActionResult> share(string uuid)
+        /*public async Task<IActionResult> share(string uuid)
         {
-
-        }
+            
+        }*/
     }
 }

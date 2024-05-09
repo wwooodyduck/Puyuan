@@ -16,7 +16,7 @@ namespace PuyuanDotNet8.Services
         }
         public async Task<IActionResult> Login(LoginDto login)
         {
-            JsonResult uncheckMail = new JsonResult(new { status = "2" });
+            JsonResult uncheckMail = new JsonResult(new { status = "2",message= "信箱未驗證" });
             var user = _context.UserProfile
                         .Include(e => e.UserSet)
                         .SingleOrDefault(e => e.email.Equals(login.email));
@@ -26,14 +26,14 @@ namespace PuyuanDotNet8.Services
             }   
             if(!user.UserSet.Verified)
             {
-                return fail;
+                return uncheckMail;
             }
             if(!_passwordHelper.VerifyPassword(login.password, user.password))
             {
                 return fail;
             }
             var token = _jwthelper.GetJwtToken(user.Uuid, "user");
-            JsonResult success = new JsonResult(new { status = "0", message = "成功",token });
+            JsonResult success = new JsonResult(new { status = "0",token, message = "成功" });
             return success;
         }
     }
