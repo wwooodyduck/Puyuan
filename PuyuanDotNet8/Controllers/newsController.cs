@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PuyuanDotNet8.Services;
 
 namespace PuyuanDotNet8.Controllers
 {
@@ -13,10 +14,12 @@ namespace PuyuanDotNet8.Controllers
         {
             _newsService = newsService;
         }
-        /*[HttpGet]
+        [HttpGet]
         public async Task<IActionResult> news()
         {
-
-        }*/
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            var result = await _newsService.news(uuid);
+            return result;
+        }
     }
 }

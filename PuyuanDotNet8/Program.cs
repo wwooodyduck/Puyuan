@@ -71,11 +71,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<PasswordHelper>();
 builder.Services.AddScoped<RegisterService>();
 builder.Services.AddScoped<VerificationService>();
+builder.Services.AddScoped<NewsServices>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ForgetPasswordService>();
 builder.Services.AddScoped<UsersetService>();
 builder.Services.AddScoped<FriendServices>();
-
+builder.Services.AddScoped<shareServices>();
 builder.Services.AddSingleton<EmailSenderHelper>();builder.Services.AddSingleton<JwtHelper>();
 builder.Services.AddSingleton<RandomCodeHelper>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

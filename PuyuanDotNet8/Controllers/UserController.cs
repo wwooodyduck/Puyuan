@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using PuyuanDotNet8.Data;
@@ -9,10 +10,10 @@ namespace PuyuanDotNet8.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class userController : ControllerBase
+    public class UserController : ControllerBase
     { 
         private readonly UsersetService _usersetService;
-        public userController(UsersetService registerService)
+        public UserController(UsersetService registerService)
         {
             _usersetService = registerService;
         }
@@ -143,12 +144,13 @@ namespace PuyuanDotNet8.Controllers
             var result = await _usersetService.DairyDelete(dairyDelete, uuid);
             return result;
         }
-
-        [HttpGet("alc")]
+        [Authorize]
+        [HttpGet("a1c")]
         public async Task<IActionResult> HbA1cGet()
         {
             var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
             var result = await _usersetService.HbA1cGet(uuid);
+            
             return result;
         }
 
@@ -164,7 +166,7 @@ namespace PuyuanDotNet8.Controllers
             return result;
         }
 
-        [HttpDelete("alc")]
+        [HttpDelete("alcs")]
         public async Task<IActionResult> HbA1cDelete(HbA1cDelete hbA1Cdelete)
         {
             var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
@@ -249,7 +251,13 @@ namespace PuyuanDotNet8.Controllers
             var result = await _usersetService.Userinfo(uuid);
             return result;
         }
-
+        [HttpGet("care")]
+        public async Task<IActionResult> careget()
+        {
+            var uuid = User.Claims.First(claim => claim.Type == "jti").Value;
+            var result = await _usersetService.careget(uuid);
+            return result;
+        }
        
     }
 }

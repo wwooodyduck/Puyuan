@@ -107,10 +107,10 @@ public partial class HbA1c
     [MaxLength(100)]
     public string Uuid { get; set; }
     [MaxLength(20)]
-    public double A1c { get; set; }
+    public int A1c { get; set; }
     public DateTime Recorded_At { get; set; }
     public DateTime Created_At { get; set; }
-    public DateTime? Updated_At { get; set; }
+    public DateTime Updated_At { get; set; }
     [JsonIgnore]
     public UserProfile UserProfile { get; set; }
 }

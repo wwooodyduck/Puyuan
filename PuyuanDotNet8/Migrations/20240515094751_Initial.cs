@@ -203,10 +203,10 @@ namespace PuyuanDotNet8.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: ""),
-                    A1c = table.Column<double>(type: "float", maxLength: 20, nullable: false, defaultValue: 0.0),
+                    A1c = table.Column<int>(type: "int", maxLength: 20, nullable: false, defaultValue: 0),
                     Recorded_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
                     Created_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified))
                 },
                 constraints: table =>
                 {
@@ -251,12 +251,15 @@ namespace PuyuanDotNet8.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Uuid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    User_Id = table.Column<int>(type: "int", nullable: true),
-                    Member_Id = table.Column<int>(type: "int", nullable: true),
-                    Reply_Id = table.Column<int>(type: "int", nullable: true),
-                    Message = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Created_At = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    User_Id = table.Column<int>(type: "int", nullable: false),
+                    group = table.Column<int>(type: "int", nullable: false),
+                    Member_Id = table.Column<int>(type: "int", nullable: false),
+                    Reply_Id = table.Column<int>(type: "int", nullable: false),
+                    title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Pushed_At = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Created_At = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Updated_At = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

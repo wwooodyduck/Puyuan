@@ -172,13 +172,16 @@ public partial class Notification
     public int Id { get; set; }
     [MaxLength(100)]
     public string Uuid { get; set; }
-    public int? User_Id { get; set; }
-    public int? Member_Id { get; set; }
-    public int? Reply_Id { get; set; }
+    public int User_Id { get; set; }
+    public int group {  get; set; }
+    public int Member_Id { get; set; }
+    public int Reply_Id { get; set; }
     [MaxLength(100)]
-    public string? Message { get; set; }
-    public DateTime? Created_At { get; set; }
-    public DateTime? Updated_At { get; set; }
+    public string title { get; set; }
+    public string Message { get; set; }
+    public DateTime Pushed_At {  get; set; }
+    public DateTime Created_At { get; set; }
+    public DateTime Updated_At { get; set; }
 
     public UserProfile UserProfile { get; set; }
 

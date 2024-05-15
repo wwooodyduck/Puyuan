@@ -12,7 +12,7 @@ using PuyuanDotNet8.Data;
 namespace PuyuanDotNet8.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240509090354_Initial")]
+    [Migration("20240515094751_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -395,11 +395,11 @@ namespace PuyuanDotNet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("A1c")
+                    b.Property<int>("A1c")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
-                        .HasColumnType("float")
-                        .HasDefaultValue(0.0);
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("Created_At")
                         .ValueGeneratedOnAdd()
@@ -411,7 +411,7 @@ namespace PuyuanDotNet8.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-                    b.Property<DateTime?>("Updated_At")
+                    b.Property<DateTime>("Updated_At")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
@@ -489,26 +489,37 @@ namespace PuyuanDotNet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("Created_At")
+                    b.Property<DateTime>("Created_At")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Member_Id")
+                    b.Property<int>("Member_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Message")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Reply_Id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Updated_At")
+                    b.Property<DateTime>("Pushed_At")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("User_Id")
+                    b.Property<int>("Reply_Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Updated_At")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("User_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Uuid")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("group")
+                        .HasColumnType("int");
+
+                    b.Property<string>("title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");

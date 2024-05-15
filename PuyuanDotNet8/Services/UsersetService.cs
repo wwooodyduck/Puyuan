@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using PuyuanDotNet8.Data;
 using PuyuanDotNet8.Helpers;
 using System.ComponentModel.DataAnnotations;
+using System.Net.NetworkInformation;
 
 namespace PuyuanDotNet8.Services
 {
@@ -40,8 +41,6 @@ namespace PuyuanDotNet8.Services
                     return fail;
                 }
             }
-
-
             if (!string.IsNullOrEmpty(userset.weight))
                 usersets.Weight = int.Parse(userset.weight);
 
@@ -50,8 +49,6 @@ namespace PuyuanDotNet8.Services
 
             if (!string.IsNullOrEmpty(userset.email))
                 userprofile.email = userset.email;
-
-
                 usersets.Gender = userset.gender;
 
             if (!string.IsNullOrEmpty(userset.fcm_id))
@@ -70,7 +67,6 @@ namespace PuyuanDotNet8.Services
             }
             return success;
         }
-
 
         public async Task<IActionResult> UserDefault(UserDefaultDto userDefault,string uuid)
         {
@@ -341,34 +337,24 @@ namespace PuyuanDotNet8.Services
 
         public async Task<IActionResult> HbA1cGet(string uuid)
         {
-            //var user = _context.HbA1c.Where(h => h.Uuid == uuid).ToList();
-            var user = _context.HbA1c.Where(h => h.Uuid == uuid).ToList();
-            
-            var userprofile = _context.UserProfile.SingleOrDefault(h => h.Uuid == uuid);
-            if (user == null)
+            try
             {
-                HbA1c @default = new HbA1c()
+                var userprofile = _context.UserProfile.SingleOrDefault(h => h.Uuid == uuid);
+                var user = _context.HbA1c.Where(h => h.Uuid == uuid).Select(u => new
                 {
-                    Uuid = uuid,
-                    Created_At = DateTime.Now,
-                };
-            }
-            var response = new
-            {
-                status = "0",
-                message = "成功",
-                a1cs = user.Select(user => new
-                {
-                    id = user.Id,
+                    id = u.Id,
                     user_id = userprofile.Id,
-                    a1c = user.A1c,
-                    recorded_At = user.Recorded_At,
-                    created_At = user.Created_At,
-                    updated_At = user.Updated_At,
-                })
-            };
-            JsonResult success = new JsonResult(response);
-            return success;
+                    a1c = u.A1c.ToString(),
+                    recorded_at = u.Recorded_At.ToString("yyyy-MM-dd HH:mm:ss"),
+                    created_at = u.Created_At.ToString("yyyy-MM-dd HH:mm:ss"),
+                    updated_at = u.Updated_At.ToString("yyyy-MM-dd HH:mm:ss")
+                });
+                return new JsonResult(new { status = "0", message = "success",a1cs=user});
+            }
+            catch(DbUpdateException ex)
+            {
+                return fail;
+            }
         }
 
         public async Task<IActionResult> HbA1cUpload(HbA1cDto hbA1Cdto, string uuid)
@@ -393,12 +379,12 @@ namespace PuyuanDotNet8.Services
 
         public async Task<IActionResult> HbA1cDelete(HbA1cDelete hbA1Cdelete, string uuid)
         {
-            var matchedRecords = _context.HbA1c.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList(); // 假设按 Id 排序
-            var indexesToDelete = hbA1Cdelete.ids.Distinct().OrderBy(x => x).ToList(); // 去重并排序
-            var recordsToDelete = new List<HbA1c>(); // 用你的实体类型替换 YourEntityType
+            var matchedRecords = _context.HbA1c.Where(h => h.Uuid == uuid).OrderBy(h => h.Id).ToList();
+            var indexesToDelete = hbA1Cdelete.ids.Distinct().OrderBy(x => x).ToList();
+            var recordsToDelete = new List<HbA1c>();
             foreach (var index in indexesToDelete)
             {
-                if (index >= 0 && index < matchedRecords.Count) // 确保索引有效
+                if (index >= 0 && index < matchedRecords.Count)
                 {
                     recordsToDelete.Add(matchedRecords[index]);
                 }
@@ -710,6 +696,25 @@ namespace PuyuanDotNet8.Services
             };
             var successes= new JsonResult(response);
             return successes;
+        }
+
+        public async Task<IActionResult> careget(string uuid)
+        {
+            var userprofile=_context.UserProfile.SingleOrDefault(x => x.Uuid == uuid);
+            var user=_context.Notification.Where(e => e.Uuid == uuid);
+            var respone = user.Select(u => new
+            {
+                id=u.Id,
+                user_id=userprofile.Id,
+                member_id=u.Member_Id,
+                replay_id=u.Reply_Id,
+                message=u.Message,
+                create_at= u.Created_At,
+                update_at= u.Updated_At,
+            });
+            var success = new JsonResult(new { Status = "0",message="成功",cares=respone});
+            return success;
+
         }
     }
 }
