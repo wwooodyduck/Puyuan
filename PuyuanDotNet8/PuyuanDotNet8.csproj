@@ -7,6 +7,7 @@
     <InvariantGlobalization>false</InvariantGlobalization>
 	 <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	 <NoWarn>$(NoWarn);1591</NoWarn>
+	  <UserSecretsId>e05740d0-ef70-4ebf-98de-63c0dca0a89c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
